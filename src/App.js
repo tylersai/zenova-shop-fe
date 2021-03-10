@@ -1,6 +1,7 @@
 import "./App.css";
 import { Col, Container, Row } from "reactstrap";
 import { Footer, Header } from "./components";
+import { HomePage } from "./pages/";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         <Container>
           <Row>
             <Col>
-              <h2 className="text-center">Welcome to Zenova Shop</h2>
+              <HomePage />
             </Col>
           </Row>
         </Container>
