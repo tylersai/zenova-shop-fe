@@ -9,8 +9,11 @@ export const Product = ({ product }) => {
         <CardImg top src={product.image} alt="Prod Img" />
         <CardBody>
           <CardTitle tag="h5">{product.name}</CardTitle>
-          <CardText style={{ textDecoration: "none" }}>
-            {product.description}
+          <CardText tag="div">
+            {product.rating} from {product.numReviews} reviews
+          </CardText>
+          <CardText className="pt-3" tag="h5">
+            ${product.price}
           </CardText>
         </CardBody>
       </a>
