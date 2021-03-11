@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardBody, CardImg, CardText, CardTitle } from "reactstrap";
+import { Rating } from "./";
 import "./Product.css";
 
 export const Product = ({ product }) => {
@@ -10,7 +11,7 @@ export const Product = ({ product }) => {
         <CardBody>
           <CardTitle tag="h5">{product.name}</CardTitle>
           <CardText tag="div">
-            {product.rating} from {product.numReviews} reviews
+            <Rating rating={product.rating} reviews={product.numReviews} />
           </CardText>
           <CardText className="pt-3" tag="h5">
             ${product.price}
