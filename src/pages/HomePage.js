@@ -1,9 +1,23 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Col, Row } from "reactstrap";
 import { Product } from "../components";
-import products from "../products";
 
 export const HomePage = () => {
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = () => {
+    axios
+      .get("/products")
+      .then((res) => setProducts(res.data))
+      .catch((err) => setProducts([]));
+  };
+
+  useEffect(() => {
+    fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <h2>Latest Products</h2>

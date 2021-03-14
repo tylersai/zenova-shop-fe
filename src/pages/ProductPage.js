@@ -1,12 +1,25 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, ListGroup, ListGroupItem, Card, Button } from "reactstrap";
 import { Rating } from "../components";
-import products from "../products";
 
 export const ProductPage = ({ match }) => {
   const id = match.params.id;
-  const product = products.find((p) => p._id === id);
+  const [product, setProduct] = useState(null);
+
+  const fetchProduct = () => {
+    axios
+      .get(`/product/${id}`)
+      .then((res) => setProduct(res.data))
+      .catch((err) => setProduct(null));
+  };
+
+  useEffect(() => {
+    fetchProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
   if (!product) return null;
   return (
     <div className="ProductPage">
