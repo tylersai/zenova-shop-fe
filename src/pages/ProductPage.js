@@ -10,7 +10,7 @@ export const ProductPage = ({ match }) => {
 
   const fetchProduct = () => {
     axios
-      .get(`/product/${id}`)
+      .get(`/products/${id}`)
       .then((res) => setProduct(res.data))
       .catch((err) => setProduct(null));
   };
