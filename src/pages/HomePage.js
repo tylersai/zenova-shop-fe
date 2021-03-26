@@ -1,33 +1,35 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
+import { productListAction } from "../actions";
 import { Product } from "../components";
 
 export const HomePage = () => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
-  const fetchProducts = () => {
-    axios
-      .get("/products")
-      .then((res) => setProducts(res.data))
-      .catch((err) => setProducts([]));
-  };
+  const productState = useSelector((state) => state.productState);
+  const { productList, loading, error } = productState;
 
   useEffect(() => {
-    fetchProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(productListAction());
+  }, [dispatch]);
 
   return (
     <div>
       <h2>Latest Products</h2>
-      <Row>
-        {products.map((p) => (
-          <Col key={p._id} sm={12} md={6} lg={4} xl={3}>
-            <Product product={p} />
-          </Col>
-        ))}
-      </Row>
+      {loading ? (
+        <h4 className="text-secondary">Loading...</h4>
+      ) : error ? (
+        <h4 className="text-danger">{error}</h4>
+      ) : (
+        <Row>
+          {productList.map((p) => (
+            <Col key={p._id} sm={12} md={6} lg={4} xl={3}>
+              <Product product={p} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </div>
   );
 };
