@@ -89,7 +89,7 @@ export const ProductPage = ({ match, history }) => {
                       <Col>
                         <Input
                           type="select"
-                          size="sm"
+                          bsSize="sm"
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
                         >
