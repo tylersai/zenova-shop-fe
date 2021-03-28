@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Row } from "reactstrap";
+import { Alert, Col, Row } from "reactstrap";
 import { productListAction } from "../actions";
-import { Product } from "../components";
+import { Product, Loader } from "../components";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -16,11 +16,13 @@ export const HomePage = () => {
 
   return (
     <div>
-      <h2>Latest Products</h2>
+      <h2 className="mb-3">Latest Products</h2>
       {loading ? (
-        <h4 className="text-secondary">Loading...</h4>
+        <Loader />
       ) : error ? (
-        <h4 className="text-danger">{error}</h4>
+        <Alert color="danger" role="status">
+          {error}
+        </Alert>
       ) : (
         <Row>
           {productList.map((p) => (
