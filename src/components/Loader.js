@@ -1,10 +1,11 @@
 import React from "react";
 import { Spinner } from "reactstrap";
+import "./Loader.css";
 
 export const Loader = () => {
   return (
-    <Spinner className="Loader d-block mx-auto my-2">
-      <span className="sr-only">Loading...</span>
-    </Spinner>
+    <div className="Loader d-block mx-auto my-2">
+      <Spinner className="d-block mx-auto" />
+    </div>
   );
 };

@@ -30,7 +30,7 @@ export const ProductPage = ({ match }) => {
   return (
     <div className="ProductPage">
       <Link to="/" className="btn btn-light mt-1 mb-3">
-        <i class="fas fa-chevron-left mr-2"></i>
+        <i className="fas fa-chevron-left mr-2"></i>
         Back
       </Link>
       {loading ? (
