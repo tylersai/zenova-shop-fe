@@ -1,10 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Card, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import { cartAddAction } from "../actions/cartActions";
 
-export const CartPage = ({ match }) => {
+export const CartPage = ({ match, location }) => {
+  const pid = match.params.id;
+  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+  const dispatch = useDispatch();
+
+  const cartState = useSelector((state) => state.cartState);
+  const { data } = cartState;
+
+  useEffect(() => {
+    if (pid && qty) {
+      dispatch(cartAddAction(pid, qty));
+    }
+  }, [dispatch, pid, qty]);
   return (
     <div className="CartPage">
       <h3>Cart Page</h3>
-      <p>PID : {match.params.id}</p>
+      {data && data.length > 0 && (
+        <Row className="pt-4">
+          <Col md={10}>
+            <Card>
+              <ListGroup flush>
+                {data.map((item) => (
+                  <ListGroupItem key={item.pid}>
+                    <Row>
+                      <Col xs={11}>
+                        <h5 className="my-2">{item.name}</h5>
+                      </Col>
+                      <Col xs={1}>
+                        <h5 className="text-success my-2">{item.qty}</h5>
+                      </Col>
+                    </Row>
+                  </ListGroupItem>
+                ))}
+              </ListGroup>
+            </Card>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };
