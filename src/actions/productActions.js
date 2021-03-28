@@ -18,3 +18,21 @@ export const productListAction = () => async (dispatch) => {
     });
   }
 };
+
+export const productDetailsAction = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: ActionType.PRODUCT_DETAILS_REQUEST });
+
+    const res = await axios.get("/products/" + id);
+
+    dispatch({ type: ActionType.PRODUCT_DETAILS_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: ActionType.PRODUCT_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

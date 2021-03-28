@@ -7,8 +7,8 @@ import { Product, Loader } from "../components";
 export const HomePage = () => {
   const dispatch = useDispatch();
 
-  const productState = useSelector((state) => state.productState);
-  const { productList, loading, error } = productState;
+  const productListState = useSelector((state) => state.productListState);
+  const { loading, data, error } = productListState;
 
   useEffect(() => {
     dispatch(productListAction());
@@ -25,7 +25,7 @@ export const HomePage = () => {
         </Alert>
       ) : (
         <Row>
-          {productList.map((p) => (
+          {data.map((p) => (
             <Col key={p._id} sm={12} md={6} lg={4} xl={3}>
               <Product product={p} />
             </Col>
