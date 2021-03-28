@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -9,11 +9,12 @@ import {
   Card,
   Button,
   Alert,
+  Input,
 } from "reactstrap";
 import { productDetailsAction } from "../actions";
 import { Loader, Rating } from "../components";
 
-export const ProductPage = ({ match }) => {
+export const ProductPage = ({ match, history }) => {
   const id = match.params.id;
 
   const dispatch = useDispatch();
@@ -22,10 +23,16 @@ export const ProductPage = ({ match }) => {
   const { loading, data, error } = productDetailsState;
   const product = data;
 
+  const [qty, setQty] = useState(1);
+
   useEffect(() => {
     dispatch(productDetailsAction(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, id]);
+
+  const processAddToCard = () => {
+    history.push(`/cart/${id}?qty=${qty}`);
+  };
 
   return (
     <div className="ProductPage">
@@ -75,11 +82,33 @@ export const ProductPage = ({ match }) => {
                     </Col>
                   </Row>
                 </ListGroupItem>
+                {product.countInStock > 0 && (
+                  <ListGroupItem>
+                    <Row>
+                      <Col>Qty:</Col>
+                      <Col>
+                        <Input
+                          type="select"
+                          size="sm"
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {[...Array(product.countInStock).keys()].map((o) => (
+                            <option key={o + 1} value={o + 1}>
+                              {o + 1}
+                            </option>
+                          ))}
+                        </Input>
+                      </Col>
+                    </Row>
+                  </ListGroupItem>
+                )}
                 <ListGroupItem>
                   <Button
                     block
                     color="dark"
                     disabled={product.countInStock === 0}
+                    onClick={processAddToCard}
                   >
                     Add To Cart
                   </Button>
