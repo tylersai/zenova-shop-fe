@@ -11,7 +11,7 @@ import {
   ListGroupItem,
   Row,
 } from "reactstrap";
-import { cartAddAction } from "../actions/cartActions";
+import { cartAddAction, cartRemoveAction } from "../actions/cartActions";
 
 export const CartPage = ({ match, location }) => {
   const pid = match.params.id;
@@ -28,6 +28,8 @@ export const CartPage = ({ match, location }) => {
   }, [dispatch, pid, qty]);
 
   const setProductQty = (pid, qty) => dispatch(cartAddAction(pid, qty));
+
+  const removeProduct = (pid) => dispatch(cartRemoveAction(pid));
 
   return (
     <div className="CartPage">
@@ -75,7 +77,11 @@ export const CartPage = ({ match, location }) => {
                         </Input>
                       </Col>
                       <Col xs={6} md={1}>
-                        <Button block color="light">
+                        <Button
+                          block
+                          color="light"
+                          onClick={() => removeProduct(item.pid)}
+                        >
                           <i className="fa fa-trash"></i>
                         </Button>
                       </Col>
