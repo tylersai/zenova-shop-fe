@@ -36,13 +36,13 @@ export const CartPage = ({ match, location }) => {
       <h3>Shopping Cart</h3>
       {data && data.length > 0 ? (
         <Row className="pt-4">
-          <Col md={11}>
+          <Col md={8}>
             <Card>
               <ListGroup flush>
                 {data.map((item) => (
                   <ListGroupItem key={item.pid}>
                     <Row>
-                      <Col xs={6} md={1}>
+                      <Col xs={6} md={3}>
                         <img
                           className="img img-fluid my-2 my-md-0"
                           src={item.image}
@@ -53,37 +53,39 @@ export const CartPage = ({ match, location }) => {
                         <h5 className="my-2">
                           <Link to={`/product/${item.pid}`}>{item.name}</Link>
                         </h5>
+                        <Row>
+                          <Col xs={6} md={4}>
+                            <Input
+                              className="my-1"
+                              type="select"
+                              bsSize="sm"
+                              value={item.qty}
+                              onChange={(e) =>
+                                setProductQty(item.pid, e.target.value)
+                              }
+                            >
+                              {[...Array(item.countInStock).keys()].map((o) => (
+                                <option key={o + 1} value={o + 1}>
+                                  {o + 1}
+                                </option>
+                              ))}
+                            </Input>
+                          </Col>
+                          <Col xs={6} md={4}>
+                            <Button
+                              className="py-2 px-3"
+                              color="light"
+                              onClick={() => removeProduct(item.pid)}
+                            >
+                              <i className="fa fa-trash"></i>
+                            </Button>
+                          </Col>
+                        </Row>
                       </Col>
                       <Col md={2}>
                         <h5 className="text-success text-right my-2">
-                          {item.price}
+                          ${item.price}
                         </h5>
-                      </Col>
-                      <Col xs={6} md={1}>
-                        <Input
-                          className="my-1"
-                          type="select"
-                          bsSize="sm"
-                          value={item.qty}
-                          onChange={(e) =>
-                            setProductQty(item.pid, e.target.value)
-                          }
-                        >
-                          {[...Array(item.countInStock).keys()].map((o) => (
-                            <option key={o + 1} value={o + 1}>
-                              {o + 1}
-                            </option>
-                          ))}
-                        </Input>
-                      </Col>
-                      <Col xs={6} md={1}>
-                        <Button
-                          block
-                          color="light"
-                          onClick={() => removeProduct(item.pid)}
-                        >
-                          <i className="fa fa-trash"></i>
-                        </Button>
                       </Col>
                     </Row>
                   </ListGroupItem>
@@ -91,6 +93,7 @@ export const CartPage = ({ match, location }) => {
               </ListGroup>
             </Card>
           </Col>
+          <Col md={4}></Col>
         </Row>
       ) : (
         <Alert color="info" className="mt-3 ">
