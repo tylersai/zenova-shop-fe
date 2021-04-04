@@ -1,7 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Alert, Card, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  Input,
+  ListGroup,
+  ListGroupItem,
+  Row,
+} from "reactstrap";
 import { cartAddAction } from "../actions/cartActions";
 
 export const CartPage = ({ match, location }) => {
@@ -17,22 +26,58 @@ export const CartPage = ({ match, location }) => {
       dispatch(cartAddAction(pid, qty));
     }
   }, [dispatch, pid, qty]);
+
+  const setProductQty = (pid, qty) => dispatch(cartAddAction(pid, qty));
+
   return (
     <div className="CartPage">
       <h3>Shopping Cart</h3>
       {data && data.length > 0 ? (
         <Row className="pt-4">
-          <Col md={10}>
+          <Col md={11}>
             <Card>
               <ListGroup flush>
                 {data.map((item) => (
                   <ListGroupItem key={item.pid}>
                     <Row>
-                      <Col xs={11}>
-                        <h5 className="my-2">{item.name}</h5>
+                      <Col xs={6} md={1}>
+                        <img
+                          className="img img-fluid my-2 my-md-0"
+                          src={item.image}
+                          alt="Product Img"
+                        />
                       </Col>
-                      <Col xs={1}>
-                        <h5 className="text-success my-2">{item.qty}</h5>
+                      <Col md={7}>
+                        <h5 className="my-2">
+                          <Link to={`/product/${item.pid}`}>{item.name}</Link>
+                        </h5>
+                      </Col>
+                      <Col md={2}>
+                        <h5 className="text-success text-right my-2">
+                          {item.price}
+                        </h5>
+                      </Col>
+                      <Col xs={6} md={1}>
+                        <Input
+                          className="my-1"
+                          type="select"
+                          bsSize="sm"
+                          value={item.qty}
+                          onChange={(e) =>
+                            setProductQty(item.pid, e.target.value)
+                          }
+                        >
+                          {[...Array(item.countInStock).keys()].map((o) => (
+                            <option key={o + 1} value={o + 1}>
+                              {o + 1}
+                            </option>
+                          ))}
+                        </Input>
+                      </Col>
+                      <Col xs={6} md={1}>
+                        <Button block color="light">
+                          <i className="fa fa-trash"></i>
+                        </Button>
                       </Col>
                     </Row>
                   </ListGroupItem>
