@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import { Link } from "react-router-dom";
+import { Alert, Card, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { cartAddAction } from "../actions/cartActions";
 
 export const CartPage = ({ match, location }) => {
@@ -18,8 +19,8 @@ export const CartPage = ({ match, location }) => {
   }, [dispatch, pid, qty]);
   return (
     <div className="CartPage">
-      <h3>Cart Page</h3>
-      {data && data.length > 0 && (
+      <h3>Shopping Cart</h3>
+      {data && data.length > 0 ? (
         <Row className="pt-4">
           <Col md={10}>
             <Card>
@@ -40,6 +41,13 @@ export const CartPage = ({ match, location }) => {
             </Card>
           </Col>
         </Row>
+      ) : (
+        <Alert color="info" className="mt-3 ">
+          Your cart is empty,{" "}
+          <Link className="alert-link" to="/">
+            continue shopping
+          </Link>
+        </Alert>
       )}
     </div>
   );
