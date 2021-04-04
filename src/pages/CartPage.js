@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { cartAddAction, cartRemoveAction } from "../actions/cartActions";
 
-export const CartPage = ({ match, location }) => {
+export const CartPage = ({ match, location, history }) => {
   const pid = match.params.id;
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
   const dispatch = useDispatch();
@@ -30,6 +30,8 @@ export const CartPage = ({ match, location }) => {
   const setProductQty = (pid, qty) => dispatch(cartAddAction(pid, qty));
 
   const removeProduct = (pid) => dispatch(cartRemoveAction(pid));
+
+  const proceedToCheckout = () => history.push("/login?redirect=shipping");
 
   return (
     <div className="CartPage">
@@ -109,7 +111,7 @@ export const CartPage = ({ match, location }) => {
                   </h5>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <Button block color="dark">
+                  <Button block color="dark" onClick={proceedToCheckout}>
                     Proceed to Checkout
                   </Button>
                 </ListGroupItem>
