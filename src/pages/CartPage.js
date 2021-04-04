@@ -61,7 +61,7 @@ export const CartPage = ({ match, location }) => {
                               bsSize="sm"
                               value={item.qty}
                               onChange={(e) =>
-                                setProductQty(item.pid, e.target.value)
+                                setProductQty(item.pid, +e.target.value)
                               }
                             >
                               {[...Array(item.countInStock).keys()].map((o) => (
@@ -93,7 +93,29 @@ export const CartPage = ({ match, location }) => {
               </ListGroup>
             </Card>
           </Col>
-          <Col md={4}></Col>
+          <Col md={4}>
+            <Card>
+              <ListGroup flush>
+                <ListGroupItem>
+                  <h4 className="my-2">
+                    Subtotal ({data.reduce((acc, item) => acc + item.qty, 0)})
+                    items
+                  </h4>
+                  <h5 className="mt-4">
+                    $
+                    {data
+                      .reduce((acc, item) => acc + item.qty * item.price, 0)
+                      .toFixed(2)}
+                  </h5>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Button block color="dark">
+                    Proceed to Checkout
+                  </Button>
+                </ListGroupItem>
+              </ListGroup>
+            </Card>
+          </Col>
         </Row>
       ) : (
         <Alert color="info" className="mt-3 ">
