@@ -12,6 +12,7 @@ import {
   Row,
 } from "reactstrap";
 import { cartAddAction, cartRemoveAction } from "../actions/cartActions";
+import "./CartPage.css";
 
 export const CartPage = ({ match, location, history }) => {
   const pid = match.params.id;
@@ -51,10 +52,21 @@ export const CartPage = ({ match, location, history }) => {
                           alt="Product Img"
                         />
                       </Col>
-                      <Col md={7}>
-                        <h5 className="my-2">
-                          <Link to={`/product/${item.pid}`}>{item.name}</Link>
-                        </h5>
+                      <Col md={9}>
+                        <Row>
+                          <Col lg={9}>
+                            <h5 className="my-2 mr-2">
+                              <Link to={`/product/${item.pid}`}>
+                                {item.name}
+                              </Link>
+                            </h5>
+                          </Col>
+                          <Col lg={3}>
+                            <h5 className="text-success my-2 checkout-item-price">
+                              ${item.price}
+                            </h5>
+                          </Col>
+                        </Row>
                         <Row>
                           <Col xs={6} md={4}>
                             <Input
@@ -83,11 +95,6 @@ export const CartPage = ({ match, location, history }) => {
                             </Button>
                           </Col>
                         </Row>
-                      </Col>
-                      <Col md={2}>
-                        <h5 className="text-success text-right my-2">
-                          ${item.price}
-                        </h5>
                       </Col>
                     </Row>
                   </ListGroupItem>

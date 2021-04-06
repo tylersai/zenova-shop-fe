@@ -1,0 +1,10 @@
+.CartPage .checkout-item-price {
+  text-align: left;
+  white-space: nowrap;
+}
+
+@media (min-width: 992px) {
+  .CartPage .checkout-item-price {
+    text-align: right;
+  }
+}
