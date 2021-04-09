@@ -1,21 +1,47 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import {
+  Alert,
+  Button,
+  Col,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+} from "reactstrap";
+import { loginAction } from "../actions";
 
-export const LoginPage = () => {
+export const LoginPage = ({ location, history }) => {
+  const dispatch = useDispatch();
+  const { loading, error, data } = useSelector(
+    (state) => state.currentUserState
+  );
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const goLogin = (e) => {
     e.preventDefault();
-    console.log({ email, password });
+    if (!loading) {
+      if (email && password) {
+        dispatch(loginAction(email, password));
+      }
+    }
   };
+
+  if (data && data._id) {
+    const redirect = location.search && location.search.split("=")[1];
+    history.push(redirect || "/");
+  }
 
   return (
     <div className="LoginPage">
       <Row className="justify-content-sm-center">
         <Col xs={12} sm={10} md={6}>
           <h2 className="text-center mt-2 mb-5">Zenova</h2>
+          {error && <Alert color="danger">{error}</Alert>}
           <Form onSubmit={goLogin}>
             <FormGroup>
               <Label htmlFor="email">Email</Label>
@@ -39,7 +65,12 @@ export const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </FormGroup>
-            <Button type="submit" color="dark" className="my-2">
+            <Button
+              type="submit"
+              color="dark"
+              className="my-2"
+              disabled={loading}
+            >
               Login
             </Button>
           </Form>
