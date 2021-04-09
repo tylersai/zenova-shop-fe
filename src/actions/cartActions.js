@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ActionType } from "../constants/actionConstant";
+import { ActionType, StorageConst } from "../constants/";
 
 export const cartAddAction = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get("/products/" + id);
@@ -14,7 +14,10 @@ export const cartAddAction = (id, qty) => async (dispatch, getState) => {
       qty,
     },
   });
-  localStorage.setItem("cartItems", JSON.stringify(getState().cartState.data));
+  localStorage.setItem(
+    StorageConst.CART_ITEMS,
+    JSON.stringify(getState().cartState.data)
+  );
 };
 
 export const cartRemoveAction = (id) => async (dispatch, getState) => {
@@ -24,5 +27,8 @@ export const cartRemoveAction = (id) => async (dispatch, getState) => {
       pid: id,
     },
   });
-  localStorage.setItem("cartItems", JSON.stringify(getState().cartState.data));
+  localStorage.setItem(
+    StorageConst.CART_ITEMS,
+    JSON.stringify(getState().cartState.data)
+  );
 };
