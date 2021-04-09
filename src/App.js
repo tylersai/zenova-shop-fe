@@ -1,7 +1,7 @@
 import "./App.css";
 import { Col, Container, Row } from "reactstrap";
 import { Footer, Header } from "./components";
-import { CartPage, HomePage, ProductPage } from "./pages/";
+import { CartPage, HomePage, ProductPage, LoginPage } from "./pages/";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
               <Col>
                 <Switch>
                   <Route path="/" exact component={HomePage} />
+                  <Route path="/login" exact component={LoginPage} />
                   <Route path="/product/:id" exact component={ProductPage} />
                   <Route path="/cart/:id?" component={CartPage} />
                   <Route
