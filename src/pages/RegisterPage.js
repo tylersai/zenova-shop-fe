@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -11,31 +11,42 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import { loginAction } from "../actions";
+import {
+  registerUserAction,
+  clearRegisteredUser,
+  loginAction,
+} from "../actions";
 
 export const RegisterPage = ({ location, history }) => {
   const dispatch = useDispatch();
-  const { loading, error, data } = useSelector(
-    (state) => state.currentUserState
-  );
+  const { loading, error, data } = useSelector((state) => state.newUserState);
+  const currentUserState = useSelector((state) => state.currentUserState);
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordReentered, setPasswordReentered] = useState("");
 
   const goSignup = (e) => {
     e.preventDefault();
-    if (!loading) {
-      // if (email && password) {
-      //   dispatch(loginAction(email, password));
-      // }
+    if (!loading && !currentUserState.loading) {
+      dispatch(registerUserAction(name, email, password, passwordReentered));
     }
   };
 
-  // if (data && data._id) {
-  //   const redirect = location.search && location.search.split("=")[1];
-  //   history.push(redirect || "/");
-  // }
+  useEffect(() => {
+    if (data && data._id) {
+      // register successful - relogin and clear new user data in register global state
+      dispatch(clearRegisteredUser());
+      dispatch(loginAction(email, password));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  if (currentUserState.data && currentUserState.data._id) {
+    const redirect = location.search && location.search.split("=")[1];
+    history.push(redirect || "/");
+  }
 
   return (
     <div className="RegisterPage">
@@ -45,7 +56,19 @@ export const RegisterPage = ({ location, history }) => {
           {error && <Alert color="danger">{error}</Alert>}
           <Form onSubmit={goSignup}>
             <FormGroup>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="name">Name *</Label>
+              <Input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="email">Email *</Label>
               <Input
                 type="email"
                 id="email"
@@ -53,35 +76,38 @@ export const RegisterPage = ({ location, history }) => {
                 placeholder="johndoe@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Password *</Label>
               <Input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="6 - 20 characters"
+                placeholder="6 - 30 characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="passwordReentered">Re-enter Password</Label>
+              <Label htmlFor="passwordReentered">Re-enter Password *</Label>
               <Input
                 type="password"
                 id="passwordReentered"
                 name="passwordReentered"
-                placeholder="6 - 20 characters"
+                placeholder="6 - 30 characters"
                 value={passwordReentered}
                 onChange={(e) => setPasswordReentered(e.target.value)}
+                required
               />
             </FormGroup>
             <Button
               type="submit"
               color="dark"
               className="my-2"
-              disabled={loading}
+              disabled={loading || currentUserState.loading}
             >
               Sign Up
             </Button>
