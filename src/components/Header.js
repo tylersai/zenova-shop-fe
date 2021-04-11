@@ -56,7 +56,9 @@ export const Header = () => {
                     {data.name}{" "}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>Profile</DropdownItem>
+                    <DropdownItem onClick={() => history.push("/profile")}>
+                      Profile
+                    </DropdownItem>
                     <DropdownItem onClick={goLogout}>Logout</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>

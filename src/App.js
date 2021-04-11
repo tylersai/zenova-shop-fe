@@ -7,6 +7,7 @@ import {
   ProductPage,
   LoginPage,
   RegisterPage,
+  ProfilePage,
 } from "./pages/";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -25,6 +26,7 @@ function App() {
                   <Route path="/register" exact component={RegisterPage} />
                   <Route path="/product/:id" exact component={ProductPage} />
                   <Route path="/cart/:id?" component={CartPage} />
+                  <Route path="/profile" component={ProfilePage} />
                   <Route
                     path="*"
                     component={() => (
