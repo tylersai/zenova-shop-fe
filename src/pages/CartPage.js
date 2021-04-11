@@ -127,7 +127,7 @@ export const CartPage = ({ match, location, history }) => {
           </Col>
         </Row>
       ) : (
-        <Alert color="info" className="mt-3 ">
+        <Alert color="info" className="mt-3">
           Your cart is empty,{" "}
           <Link className="alert-link" to="/">
             continue shopping

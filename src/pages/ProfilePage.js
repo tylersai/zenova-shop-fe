@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
-import { ProfileCard } from "./profile";
+import { OrderList, ProfileCard } from "./profile";
 
 export const ProfilePage = () => {
   const { data } = useSelector((state) => state.currentUserState);
@@ -14,7 +14,7 @@ export const ProfilePage = () => {
           )}
         </Col>
         <Col xs={12} md={8}>
-          <h3>Orders</h3>
+          <OrderList orders={[]} />
         </Col>
       </Row>
     </div>
