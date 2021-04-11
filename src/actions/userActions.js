@@ -1,6 +1,28 @@
 import axios from "axios";
 import { ActionType, StorageConst } from "../constants/";
 
+export const registerUserAction = (name, email, password) => async (
+  dispatch
+) => {
+  try {
+    dispatch({ type: ActionType.USER_REGISTER_REQUEST });
+    const { data } = await axios.post("/users/register", {
+      name,
+      email,
+      password,
+    });
+    dispatch({ type: ActionType.USER_REGISTER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ActionType.USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const loginAction = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: ActionType.USER_LOGIN_REQUEST });

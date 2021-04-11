@@ -1,5 +1,21 @@
 import { ActionType } from "../constants";
 
+export const registerUserReducer = (state = { data: null }, action) => {
+  switch (action.type) {
+    case ActionType.USER_REGISTER_REQUEST:
+      return { loading: true, data: null };
+
+    case ActionType.USER_REGISTER_SUCCESS:
+      return { loading: false, data: action.payload };
+
+    case ActionType.USER_REGISTER_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
 export const loginReducer = (state = { data: null }, action) => {
   switch (action.type) {
     case ActionType.USER_LOGIN_REQUEST:
