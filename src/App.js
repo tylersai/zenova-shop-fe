@@ -9,6 +9,7 @@ import {
   RegisterPage,
   ProfilePage,
   ShippingPage,
+  NotFoundPage,
 } from "./pages/";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -29,12 +30,7 @@ function App() {
                   <Route path="/cart/:id?" component={CartPage} />
                   <Route path="/profile" component={ProfilePage} />
                   <Route path="/shipping" component={ShippingPage} />
-                  <Route
-                    path="*"
-                    component={() => (
-                      <h3 className="text-center my-4">NOT FOUND</h3>
-                    )}
-                  />
+                  <Route path="*" component={NotFoundPage} />
                 </Switch>
               </Col>
             </Row>
