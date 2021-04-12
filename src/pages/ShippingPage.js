@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 export const ShippingPage = () => {
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [country, setCountry] = useState("");
+  const { data } = useSelector((state) => state.shippingInfoState);
+
+  const [address, setAddress] = useState(data.address);
+  const [city, setCity] = useState(data.city);
+  const [postalCode, setPostalCode] = useState(data.postalCode);
+  const [country, setCountry] = useState(data.country);
 
   const goSaveShipping = (e) => {
     e.preventDefault();
