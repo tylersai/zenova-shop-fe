@@ -7,6 +7,7 @@ import {
   cartReducer,
   loginReducer,
   registerUserReducer,
+  shippingInfoReducer,
 } from "./reducers";
 import { StorageConst } from "./constants";
 
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   cartState: cartReducer,
   currentUserState: loginReducer,
   newUserState: registerUserReducer,
+  shippingInfoState: shippingInfoReducer,
 });
 
 const cartItemsFromStorage = JSON.parse(
@@ -24,9 +26,13 @@ const cartItemsFromStorage = JSON.parse(
 const currentUserFromStorage = JSON.parse(
   localStorage.getItem(StorageConst.CURRENT_USER) || "null"
 );
+const shippingInfoFromStorage = JSON.parse(
+  localStorage.getItem(StorageConst.SHIPPING_INFO) || "null"
+);
 const initialState = {
   cartState: { data: cartItemsFromStorage },
   currentUserState: { data: currentUserFromStorage },
+  shippingInfoState: { data: shippingInfoFromStorage },
 };
 
 const middleWares = [thunk];
