@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { saveShippingInfoAction } from "../actions/shippingActions";
 
-export const ShippingPage = () => {
+export const ShippingPage = ({ history }) => {
+  const dispatch = useDispatch();
   const { data } = useSelector((state) => state.shippingInfoState);
 
   const [address, setAddress] = useState(data.address);
@@ -12,6 +14,10 @@ export const ShippingPage = () => {
 
   const goSaveShipping = (e) => {
     e.preventDefault();
+    if (address && city && country) {
+      dispatch(saveShippingInfoAction({ address, city, country, postalCode }));
+      history.push("/payment");
+    }
   };
 
   return (
