@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { saveShippingInfoAction } from "../actions/shippingActions";
+import { CheckoutStepper } from "../components";
 
 export const ShippingPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export const ShippingPage = ({ history }) => {
 
   return (
     <div className="ShippingPage">
+      <CheckoutStepper step={2} />
       <Row className="justify-content-sm-center">
         <Col xs={12} sm={10} md={6}>
           <h2 className="text-center mt-2 mb-5">Shipping</h2>
