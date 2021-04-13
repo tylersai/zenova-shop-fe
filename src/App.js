@@ -9,6 +9,7 @@ import {
   RegisterPage,
   ProfilePage,
   ShippingPage,
+  PaymentPage,
   NotFoundPage,
 } from "./pages/";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -30,6 +31,7 @@ function App() {
                   <Route path="/cart/:id?" component={CartPage} />
                   <Route path="/profile" component={ProfilePage} />
                   <Route path="/shipping" component={ShippingPage} />
+                  <Route path="/payment" component={PaymentPage} />
                   <Route path="*" component={NotFoundPage} />
                 </Switch>
               </Col>
