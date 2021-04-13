@@ -1,0 +1,19 @@
+.CheckoutStepper .nav-item.active {
+  position: relative;
+}
+.CheckoutStepper .nav-item.active::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -2;
+  bottom: 2px;
+  left: calc(50% - 2px);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #343a40;
+}
+
+.CheckoutStepper .nav-link.active {
+  font-weight: 600;
+}
