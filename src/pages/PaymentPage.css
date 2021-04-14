@@ -1,0 +1,16 @@
+.PaymentPage img.payment-logo {
+  max-height: 40px;
+}
+
+.PaymentPage .payment-option {
+  border: 1px solid #bac7d1;
+  border-radius: 3px;
+}
+
+.PaymentPage .payment-option:hover {
+  background-color: #d5e3ee !important;
+}
+
+.PaymentPage .payment-option.selected {
+  background-color: #e1eef8;
+}
