@@ -6,4 +6,5 @@ export * from "./RegisterPage";
 export * from "./ProfilePage";
 export * from "./ShippingPage";
 export * from "./PaymentPage";
+export * from "./PlaceOrderPage";
 export * from "./NotFoundPage";
