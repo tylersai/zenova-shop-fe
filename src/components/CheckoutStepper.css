@@ -1,3 +1,6 @@
+.CheckoutStepper .nav {
+  flex-wrap: nowrap;
+}
 .CheckoutStepper .nav-item.active {
   position: relative;
 }
