@@ -62,7 +62,7 @@ export const CartPage = ({ match, location, history }) => {
                           </Col>
                           <Col lg={3}>
                             <h5 className="my-2 checkout-item-price">
-                              ${item.price}
+                              ${+item.price.toFixed(2) * item.qty}
                             </h5>
                           </Col>
                         </Row>
