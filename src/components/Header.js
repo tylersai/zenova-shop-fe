@@ -12,6 +12,7 @@ import {
   DropdownItem,
   DropdownToggle,
   DropdownMenu,
+  Badge,
 } from "reactstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +23,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { data } = useSelector((state) => state.currentUserState);
+  const cart = useSelector((state) => state.cartState);
   const [isOpen, setIsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
@@ -32,6 +34,11 @@ export const Header = () => {
     dispatch(logoutAction());
     history.push("/");
   };
+
+  const cartItemCount =
+    cart && cart.data && cart.data.length > 0
+      ? cart.data.reduce((count, el) => count + el.qty, 0)
+      : 0;
 
   return (
     <header className="Header">
@@ -46,7 +53,21 @@ export const Header = () => {
               <NavItem style={{ marginRight: "1rem" }}>
                 <LinkContainer to="/cart">
                   <NavLink>
-                    <i className="fas fa-shopping-cart"></i> Cart
+                    <i className="fas fa-shopping-cart"></i> Cart{" "}
+                    {cartItemCount > 0 && (
+                      <Badge
+                        pill
+                        color="success"
+                        style={{
+                          fontSize: "80%",
+                          position: "absolute",
+                          marginLeft: "4px",
+                          zIndex: 2,
+                        }}
+                      >
+                        {cartItemCount}
+                      </Badge>
+                    )}
                   </NavLink>
                 </LinkContainer>
               </NavItem>
