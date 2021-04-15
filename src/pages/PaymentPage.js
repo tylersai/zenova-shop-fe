@@ -4,13 +4,20 @@ import { CheckoutStepper } from "../components";
 import paypalLogo from "../assets/paypal-seeklogo.com.svg";
 import stripeLogo from "../assets/stripe-seeklogo.com.svg";
 import "./PaymentPage.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setPaymentMethodAction } from "../actions/paymentActions";
 
-export const PaymentPage = () => {
-  const [paymentMethod, setPaymentMethod] = useState("PayPal");
+export const PaymentPage = ({ history }) => {
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.paymentMethodState);
+  const [paymentMethod, setPaymentMethod] = useState(
+    (data && data.paymentMethod) || "PayPal"
+  );
 
   const goSavePayment = (e) => {
     e.preventDefault();
-    alert(paymentMethod);
+    dispatch(setPaymentMethodAction(paymentMethod));
+    history.push("/place-order");
   };
 
   return (
