@@ -12,7 +12,6 @@ import {
   Row,
 } from "reactstrap";
 import { cartAddAction, cartRemoveAction } from "../actions/cartActions";
-import "./CartPage.css";
 
 export const CartPage = ({ match, location, history }) => {
   const pid = match.params.id;
@@ -62,7 +61,7 @@ export const CartPage = ({ match, location, history }) => {
                             </h5>
                           </Col>
                           <Col lg={3}>
-                            <h5 className="text-success my-2 checkout-item-price">
+                            <h5 className="my-2 checkout-item-price">
                               ${item.price}
                             </h5>
                           </Col>

@@ -3,3 +3,14 @@
 main {
   min-height: 80vh;
 }
+
+.checkout-item-price {
+  text-align: left;
+  white-space: nowrap;
+}
+
+@media (min-width: 992px) {
+  .checkout-item-price {
+    text-align: right;
+  }
+}

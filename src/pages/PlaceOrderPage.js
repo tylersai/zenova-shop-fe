@@ -4,6 +4,7 @@ import { Button, Card, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { CheckoutStepper } from "../components";
 import paypalLogo from "../assets/paypal-seeklogo.com.svg";
 import stripeLogo from "../assets/stripe-seeklogo.com.svg";
+import { Link } from "react-router-dom";
 
 export const PlaceOrderPage = () => {
   const sippingInfo = useSelector((state) => state.shippingInfoState);
@@ -64,6 +65,39 @@ export const PlaceOrderPage = () => {
               </ListGroupItem>
             </ListGroup>
           </Card>
+          <h4 className="mt-4 mb-3">Order Items</h4>
+          <ListGroup flush>
+            {cartItems.map((item) => (
+              <ListGroupItem key={item.pid}>
+                <Row>
+                  <Col xs={6} md={3}>
+                    <img
+                      className="img img-fluid my-2 my-md-0"
+                      src={item.image}
+                      alt="Product Img"
+                    />
+                  </Col>
+                  <Col md={9}>
+                    <Row>
+                      <Col lg={9}>
+                        <h5 className="my-2 mr-2">
+                          <Link to={`/product/${item.pid}`}>{item.name}</Link>
+                        </h5>
+                        <p className="mt-3">
+                          {item.qty} x ${item.price.toFixed(2)}
+                        </p>
+                      </Col>
+                      <Col lg={3}>
+                        <h5 className="my-2 checkout-item-price">
+                          ${+item.price.toFixed(2) * item.qty}
+                        </h5>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+            ))}
+          </ListGroup>
         </Col>
         <Col md={4} className="mt-3">
           <Card>
@@ -92,11 +126,18 @@ export const PlaceOrderPage = () => {
               <ListGroupItem>
                 <Row>
                   <Col>Total : </Col>
-                  <Col className="text-right">${totalAmt.toFixed(2)}</Col>
+                  <Col className="text-right font-weight-bold">
+                    ${totalAmt.toFixed(2)}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
-                <Button block color="dark" onClick={goPlaceOrder}>
+                <Button
+                  block
+                  color="dark"
+                  onClick={goPlaceOrder}
+                  disabled={cartItems.length < 1 || totalAmt <= 0}
+                >
                   Place Order
                 </Button>
               </ListGroupItem>
