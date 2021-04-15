@@ -31,6 +31,8 @@ export const PlaceOrderPage = () => {
   const getTotalAmt = () => subtotal + shippingFee + taxAmt;
   const totalAmt = getTotalAmt();
 
+  const numItems = cartItems.reduce((count, el) => count + +el.qty, 0);
+
   const goPlaceOrder = (e) => {
     e.preventDefault();
     alert("Placing order...");
@@ -65,7 +67,7 @@ export const PlaceOrderPage = () => {
               </ListGroupItem>
             </ListGroup>
           </Card>
-          <h4 className="mt-4 mb-3">Order Items</h4>
+          <h4 className="mt-4 mb-3">Order Items ({numItems})</h4>
           <ListGroup flush>
             {cartItems.map((item) => (
               <ListGroupItem key={item.pid}>
@@ -107,7 +109,9 @@ export const PlaceOrderPage = () => {
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
-                  <Col>Subtotal : </Col>
+                  <Col>
+                    {numItems} Item{numItems > 1 ? "s" : ""} :{" "}
+                  </Col>
                   <Col className="text-right">${subtotal.toFixed(2)}</Col>
                 </Row>
               </ListGroupItem>
