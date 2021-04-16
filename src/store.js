@@ -37,6 +37,11 @@ const initialState = {
   cartState: { data: cartItemsFromStorage },
   currentUserState: { data: currentUserFromStorage },
   shippingInfoState: { data: shippingInfoFromStorage },
+  paymentMethodState: {
+    data: {
+      paymentMethod: "PayPal",
+    },
+  },
 };
 
 const middleWares = [thunk];
