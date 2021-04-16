@@ -88,7 +88,7 @@ export const Header = () => {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
-                <NavItem>
+                <NavItem className="ml-4 ml-md-3">
                   <LinkContainer to="/login">
                     <NavLink href="/login">
                       <i className="fas fa-user"></i> Sign In
