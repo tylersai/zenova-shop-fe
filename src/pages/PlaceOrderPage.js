@@ -1,20 +1,40 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Button, Card, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  ListGroup,
+  ListGroupItem,
+  Row,
+} from "reactstrap";
 import { CheckoutStepper } from "../components";
 import paypalLogo from "../assets/paypal-seeklogo.com.svg";
 import stripeLogo from "../assets/stripe-seeklogo.com.svg";
 import { Link } from "react-router-dom";
+import { createOrderAction } from "../actions/orderActions";
 
-export const PlaceOrderPage = () => {
-  const sippingInfo = useSelector((state) => state.shippingInfoState);
-  const { address, city, country, postalCode } = sippingInfo.data;
+export const PlaceOrderPage = ({ history }) => {
+  const dispatch = useDispatch();
+
+  const shippingInfo = useSelector((state) => state.shippingInfoState);
+  const { address, city, country, postalCode } = shippingInfo.data;
 
   const paymentMethodState = useSelector((state) => state.paymentMethodState);
   const { paymentMethod } = paymentMethodState.data || {};
 
   const cartState = useSelector((state) => state.cartState);
   const cartItems = cartState.data || [];
+
+  const createOrderState = useSelector((state) => state.createOrderState);
+  const { loading, error, data } = createOrderState;
+
+  useEffect(() => {
+    if (data && data._id) {
+      history.push("/order/" + data._id);
+    }
+  }, [data, history]);
 
   const getSubtotal = () =>
     +cartItems
@@ -35,7 +55,17 @@ export const PlaceOrderPage = () => {
 
   const goPlaceOrder = (e) => {
     e.preventDefault();
-    alert("Placing order...");
+    dispatch(
+      createOrderAction(
+        cartItems,
+        shippingInfo.data,
+        paymentMethod,
+        subtotal,
+        shippingFee,
+        taxAmt,
+        totalAmt
+      )
+    );
   };
 
   return (
@@ -135,12 +165,17 @@ export const PlaceOrderPage = () => {
                   </Col>
                 </Row>
               </ListGroupItem>
+              {error && (
+                <ListGroupItem>
+                  <Alert color="danger">{error}</Alert>
+                </ListGroupItem>
+              )}
               <ListGroupItem>
                 <Button
                   block
                   color="dark"
                   onClick={goPlaceOrder}
-                  disabled={cartItems.length < 1 || totalAmt <= 0}
+                  disabled={cartItems.length < 1 || totalAmt <= 0 || loading}
                 >
                   Place Order
                 </Button>
