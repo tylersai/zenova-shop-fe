@@ -72,7 +72,11 @@ export const Header = () => {
                 </LinkContainer>
               </NavItem>
               {data && data._id ? (
-                <Dropdown isOpen={userMenuOpen} toggle={toggleUserMenu}>
+                <Dropdown
+                  isOpen={userMenuOpen}
+                  toggle={toggleUserMenu}
+                  className="ml-2"
+                >
                   <DropdownToggle color="dark" caret>
                     {data.name}{" "}
                   </DropdownToggle>
