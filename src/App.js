@@ -11,6 +11,7 @@ import {
   ShippingPage,
   PaymentPage,
   PlaceOrderPage,
+  OrderDetailPage,
   NotFoundPage,
 } from "./pages/";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -29,6 +30,7 @@ function App() {
                   <Route path="/login" exact component={LoginPage} />
                   <Route path="/register" exact component={RegisterPage} />
                   <Route path="/product/:id" exact component={ProductPage} />
+                  <Route path="/order/:id" exact component={OrderDetailPage} />
                   <Route path="/cart/:id?" component={CartPage} />
                   <Route path="/profile" component={ProfilePage} />
                   <Route path="/shipping" component={ShippingPage} />
