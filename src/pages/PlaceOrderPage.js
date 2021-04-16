@@ -22,7 +22,7 @@ export const PlaceOrderPage = () => {
       .toFixed(2);
   const subtotal = getSubtotal();
 
-  const getShippingFee = () => +(subtotal >= 100 ? 0 : 50).toFixed(2);
+  const getShippingFee = () => +(subtotal >= 1000 ? 0 : 50).toFixed(2);
   const shippingFee = getShippingFee();
 
   const getTaxAmt = () => +(subtotal * 0.05).toFixed(2);
