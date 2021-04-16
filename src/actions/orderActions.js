@@ -9,18 +9,30 @@ export const createOrderAction = (
   shippingFee,
   taxAmount,
   totalAmount
-) => async (dispatch) => {
+) => async (dispatch, getState) => {
   try {
     dispatch({ type: ActionType.CREATE_ORDER_REQUEST });
-    const { data } = await axios.post("/orders", {
-      orderItems,
-      shippingInfo,
-      paymentMethod,
-      subtotal,
-      shippingFee,
-      taxAmount,
-      totalAmount,
-    });
+    const { currentUserState } = getState();
+    const { data } = await axios.post(
+      "/orders",
+      {
+        orderItems,
+        shippingInfo,
+        paymentMethod,
+        subtotal,
+        shippingFee,
+        taxAmount,
+        totalAmount,
+      },
+      {
+        headers: {
+          Authorization:
+            currentUserState.data &&
+            currentUserState.data.access_token &&
+            `Bearer ${currentUserState.data.access_token}`,
+        },
+      }
+    );
     dispatch({ type: ActionType.CREATE_ORDER_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
