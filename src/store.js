@@ -10,6 +10,7 @@ import {
   shippingInfoReducer,
   paymentMethodReducer,
   createOrderReducer,
+  getOrderByIdReducer,
 } from "./reducers";
 import { StorageConst } from "./constants";
 
@@ -22,6 +23,7 @@ const reducer = combineReducers({
   shippingInfoState: shippingInfoReducer,
   paymentMethodState: paymentMethodReducer,
   createOrderState: createOrderReducer,
+  orderDetailState: getOrderByIdReducer,
 });
 
 const cartItemsFromStorage = JSON.parse(

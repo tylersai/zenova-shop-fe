@@ -18,3 +18,19 @@ export const createOrderReducer = (state = { data: null }, action) => {
       return state;
   }
 };
+
+export const getOrderByIdReducer = (state = { data: null }, action) => {
+  switch (action.type) {
+    case ActionType.ORDER_DETAILS_REQUEST:
+      return { loading: true, data: null };
+
+    case ActionType.ORDER_DETAILS_SUCCESS:
+      return { loading: false, data: action.payload };
+
+    case ActionType.ORDER_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};

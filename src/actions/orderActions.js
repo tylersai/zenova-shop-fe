@@ -47,3 +47,21 @@ export const createOrderAction = (
 
 export const clearCreatedOrder = () => (dispatch) =>
   dispatch({ type: ActionType.CLEAR_CREATED_ORDER });
+
+export const getOrderByIdAction = (orderId) => async (dispatch) => {
+  try {
+    dispatch({ type: ActionType.ORDER_DETAILS_REQUEST });
+
+    const res = await axios.get("/orders/" + orderId);
+
+    dispatch({ type: ActionType.ORDER_DETAILS_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ORDER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
