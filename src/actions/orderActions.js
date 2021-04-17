@@ -48,11 +48,19 @@ export const createOrderAction = (
 export const clearCreatedOrder = () => (dispatch) =>
   dispatch({ type: ActionType.CLEAR_CREATED_ORDER });
 
-export const getOrderByIdAction = (orderId) => async (dispatch) => {
+export const getOrderByIdAction = (orderId) => async (dispatch, getState) => {
   try {
     dispatch({ type: ActionType.ORDER_DETAILS_REQUEST });
+    const { currentUserState } = getState();
 
-    const res = await axios.get("/orders/" + orderId);
+    const res = await axios.get("/orders/" + orderId, {
+      headers: {
+        Authorization:
+          currentUserState.data &&
+          currentUserState.data.access_token &&
+          `Bearer ${currentUserState.data.access_token}`,
+      },
+    });
 
     dispatch({ type: ActionType.ORDER_DETAILS_SUCCESS, payload: res.data });
   } catch (error) {

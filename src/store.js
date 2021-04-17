@@ -23,7 +23,7 @@ const reducer = combineReducers({
   shippingInfoState: shippingInfoReducer,
   paymentMethodState: paymentMethodReducer,
   createOrderState: createOrderReducer,
-  orderDetailState: getOrderByIdReducer,
+  orderDetailsState: getOrderByIdReducer,
 });
 
 const cartItemsFromStorage = JSON.parse(
