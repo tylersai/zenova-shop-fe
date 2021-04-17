@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   Row,
   Col,
@@ -34,12 +33,17 @@ export const ProductPage = ({ match, history }) => {
     history.push(`/cart/${id}?qty=${qty}`);
   };
 
+  const goBack = (e) => {
+    e.preventDefault();
+    history.goBack();
+  };
+
   return (
     <div className="ProductPage">
-      <Link to="/" className="btn btn-light mt-1 mb-3">
+      <a href="/" className="btn btn-light mt-1 mb-3" onClick={goBack}>
         <i className="fas fa-chevron-left mr-2"></i>
         Back
-      </Link>
+      </a>
       {loading ? (
         <Loader />
       ) : error ? (
