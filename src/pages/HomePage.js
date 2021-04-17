@@ -15,7 +15,7 @@ export const HomePage = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="HomePage">
       <h2 className="mb-3">Latest Products</h2>
       {loading ? (
         <Loader />
