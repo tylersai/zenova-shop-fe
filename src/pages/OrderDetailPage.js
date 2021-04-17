@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, Col, Row } from "reactstrap";
+import { Alert, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { getOrderByIdAction } from "../actions/orderActions";
 import { Loader } from "../components";
 
@@ -54,6 +54,20 @@ export const OrderDetailPage = ({ match }) => {
               <br />
               <span className="pl-2">{data.shippingInfo.postalCode}</span>
             </p>
+            <label className="font-weight-bold mb-0">Items:</label>
+            <ListGroup flush>
+              {data.orderItems.map((item) => (
+                <ListGroupItem key={item._id}>
+                  <Row>
+                    <Col xs={8}>{item.name}</Col>
+                    <Col xs={1}>x{item.qty}</Col>
+                    <Col xs={3} className="text-right">
+                      ${(item.qty * +item.price.toFixed(2)).toFixed(2)}
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
           </Col>
           <Col xs={12} md={4} lg={3}>
             <h5 className="mb-4">Summary</h5>
