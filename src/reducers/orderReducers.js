@@ -30,6 +30,9 @@ export const getOrderByIdReducer = (state = { data: null }, action) => {
     case ActionType.ORDER_DETAILS_FAIL:
       return { loading: false, error: action.payload };
 
+    case ActionType.CLEAR_ORDER_DETAILS:
+      return { loading: false, data: null, error: null };
+
     default:
       return state;
   }
