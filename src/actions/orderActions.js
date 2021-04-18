@@ -73,3 +73,31 @@ export const getOrderByIdAction = (orderId) => async (dispatch, getState) => {
     });
   }
 };
+
+export const payOrderAction = (orderId, paymentResult) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const { currentUserState } = getState();
+
+    const res = await axios.put(`/orders/${orderId}/pay`, paymentResult, {
+      headers: {
+        Authorization:
+          currentUserState.data &&
+          currentUserState.data.access_token &&
+          `Bearer ${currentUserState.data.access_token}`,
+      },
+    });
+
+    dispatch({ type: ActionType.ORDER_DETAILS_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ORDER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
