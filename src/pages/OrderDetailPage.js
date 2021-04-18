@@ -1,21 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Alert, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
-import { getOrderByIdAction } from "../actions/orderActions";
+import { getOrderByIdAction, payOrderAction } from "../actions/orderActions";
 import { Loader } from "../components";
 
 export const OrderDetailPage = ({ match }) => {
   const orderId = match.params.id;
   const dispatch = useDispatch();
 
+  // const [sdkExists, setSdkExists] = useState(false);
+
   const { loading, error, data } = useSelector(
     (state) => state.orderDetailsState
   );
 
+  // const setupPayPalSdkScript = () => {
+  //   const paypalSdkScript = document.createElement("script");
+  //   paypalSdkScript.type = "text/javascript";
+  //   paypalSdkScript.async = true;
+  //   paypalSdkScript.src = `https://www.paypal.com/sdk/js?client-id=${process.env.REACT_APP_PAYPAL_CLIENT_ID}`;
+  //   paypalSdkScript.onload = () => setSdkExists(true);
+  //   document.body.appendChild(paypalSdkScript);
+  // };
+
   useEffect(() => {
-    dispatch(getOrderByIdAction(orderId));
-  }, [dispatch, orderId]);
+    // data && !data.isPaid && !sdkExists && setupPayPalSdkScript();
+    !data && dispatch(getOrderByIdAction(orderId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, orderId, data]);
+
+  const onPaymentSuccess = (paymentResult) =>
+    dispatch(payOrderAction(orderId, paymentResult));
 
   return (
     <div className="OrderDetailPage">
@@ -25,7 +42,8 @@ export const OrderDetailPage = ({ match }) => {
       ) : error ? (
         <Alert color="danger">{error}</Alert>
       ) : (
-        data && (
+        data &&
+        data._id && (
           <Row>
             <Col xs={12} md={8} lg={9} className="mb-3">
               <p>
@@ -91,6 +109,36 @@ export const OrderDetailPage = ({ match }) => {
                 <label className="font-weight-bold mb-0">Total:</label>
                 <span className="pl-2">${data.totalAmount.toFixed(2)}</span>
               </div>
+              {data.isPaid ? (
+                <>
+                  <div className="border-bottom mt-3"></div>
+                  <h5 className="mt-4 mb-3">Status</h5>
+                  <Alert color="info" className="mb-2">
+                    Paid on {data.paidAt.substr(0, 10)}
+                  </Alert>
+
+                  {data.isDelivered ? (
+                    <Alert color="info" className="mb-2">
+                      Delivered on {data.deliveredAt.substr(0, 10)}
+                    </Alert>
+                  ) : (
+                    <Alert color="danger" className="mb-2">
+                      Not Delivered
+                    </Alert>
+                  )}
+                </>
+              ) : (
+                <div className="pt-4">
+                  <PayPalButton
+                    amount={+data.totalAmount.toFixed(2)}
+                    onSuccess={onPaymentSuccess}
+                    style={{
+                      color: "black",
+                      height: 42,
+                    }}
+                  />
+                </div>
+              )}
             </Col>
           </Row>
         )
