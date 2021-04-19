@@ -1,20 +1,37 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Col, Row } from "reactstrap";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Alert, Col, Row } from "reactstrap";
+import { getMyOrdersAction } from "../actions/orderActions";
+import { Loader } from "../components";
 import { OrderList, ProfileCard } from "./profile";
 
 export const ProfilePage = () => {
-  const { data } = useSelector((state) => state.currentUserState);
+  const dispatch = useDispatch();
+  const { data: currentUser } = useSelector((state) => state.currentUserState);
+  const { loading, error, data: orders } = useSelector(
+    (state) => state.myOrdersState
+  );
+
+  useEffect(() => {
+    dispatch(getMyOrdersAction());
+  }, [dispatch]);
+
   return (
     <div className="ProfilePage">
       <Row>
         <Col xs={12} md={4}>
-          {data && data._id && (
-            <ProfileCard name={data.name} email={data.email} />
+          {currentUser && currentUser._id && (
+            <ProfileCard name={currentUser.name} email={currentUser.email} />
           )}
         </Col>
         <Col xs={12} md={8}>
-          <OrderList orders={[]} />
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Alert color="danger">{error}</Alert>
+          ) : (
+            <OrderList orders={orders} />
+          )}
         </Col>
       </Row>
     </div>
