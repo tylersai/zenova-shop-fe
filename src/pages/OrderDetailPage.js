@@ -15,9 +15,9 @@ export const OrderDetailPage = ({ match }) => {
   );
 
   useEffect(() => {
-    !data && dispatch(getOrderByIdAction(orderId));
+    orderId && dispatch(getOrderByIdAction(orderId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, orderId, data]);
+  }, [dispatch, orderId]);
 
   const onPaymentSuccess = (paymentResult) =>
     dispatch(payOrderAction(orderId, paymentResult));
