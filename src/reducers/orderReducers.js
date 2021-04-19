@@ -37,3 +37,19 @@ export const getOrderByIdReducer = (state = { data: null }, action) => {
       return state;
   }
 };
+
+export const getMyOrdersReducer = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case ActionType.GET_MY_ORDERS_REQUEST:
+      return { loading: true, data: [] };
+
+    case ActionType.GET_MY_ORDERS_SUCCESS:
+      return { loading: false, data: action.payload };
+
+    case ActionType.GET_MY_ORDERS_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};

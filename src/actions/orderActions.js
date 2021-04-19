@@ -77,6 +77,32 @@ export const getOrderByIdAction = (orderId) => async (dispatch, getState) => {
   }
 };
 
+export const getMyOrdersAction = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ActionType.GET_MY_ORDERS_REQUEST });
+    const { currentUserState } = getState();
+
+    const res = await axios.get("/orders", {
+      headers: {
+        Authorization:
+          currentUserState.data &&
+          currentUserState.data.access_token &&
+          `Bearer ${currentUserState.data.access_token}`,
+      },
+    });
+
+    dispatch({ type: ActionType.GET_MY_ORDERS_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: ActionType.GET_MY_ORDERS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const payOrderAction = (orderId, paymentResult) => async (
   dispatch,
   getState
