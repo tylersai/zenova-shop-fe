@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,23 +10,11 @@ export const OrderDetailPage = ({ match }) => {
   const orderId = match.params.id;
   const dispatch = useDispatch();
 
-  // const [sdkExists, setSdkExists] = useState(false);
-
   const { loading, error, data } = useSelector(
     (state) => state.orderDetailsState
   );
 
-  // const setupPayPalSdkScript = () => {
-  //   const paypalSdkScript = document.createElement("script");
-  //   paypalSdkScript.type = "text/javascript";
-  //   paypalSdkScript.async = true;
-  //   paypalSdkScript.src = `https://www.paypal.com/sdk/js?client-id=${process.env.REACT_APP_PAYPAL_CLIENT_ID}`;
-  //   paypalSdkScript.onload = () => setSdkExists(true);
-  //   document.body.appendChild(paypalSdkScript);
-  // };
-
   useEffect(() => {
-    // data && !data.isPaid && !sdkExists && setupPayPalSdkScript();
     !data && dispatch(getOrderByIdAction(orderId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, orderId, data]);

@@ -9,10 +9,10 @@ export const createOrderReducer = (state = { data: null }, action) => {
       return { loading: false, data: action.payload };
 
     case ActionType.CREATE_ORDER_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, data: null, error: action.payload };
 
     case ActionType.CLEAR_CREATED_ORDER:
-      return { loading: false, data: null, error: null };
+      return { loading: false, data: null };
 
     default:
       return state;
@@ -28,10 +28,10 @@ export const getOrderByIdReducer = (state = { data: null }, action) => {
       return { loading: false, data: action.payload };
 
     case ActionType.ORDER_DETAILS_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, data: null, error: action.payload };
 
     case ActionType.CLEAR_ORDER_DETAILS:
-      return { loading: false, data: null, error: null };
+      return { loading: false, data: null };
 
     default:
       return state;
@@ -47,7 +47,7 @@ export const getMyOrdersReducer = (state = { data: [] }, action) => {
       return { loading: false, data: action.payload };
 
     case ActionType.GET_MY_ORDERS_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, data: [], error: action.payload };
 
     default:
       return state;
