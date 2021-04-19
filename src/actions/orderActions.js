@@ -51,6 +51,9 @@ export const clearCreatedOrder = () => (dispatch) =>
 export const clearExistingOrder = () => (dispatch) =>
   dispatch({ type: ActionType.CLEAR_ORDER_DETAILS });
 
+export const clearMyOrders = () => (dispatch) =>
+  dispatch({ type: ActionType.CLEAR_MY_ORDERS });
+
 export const getOrderByIdAction = (orderId) => async (dispatch, getState) => {
   try {
     dispatch({ type: ActionType.ORDER_DETAILS_REQUEST });

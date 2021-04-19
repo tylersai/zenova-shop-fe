@@ -34,6 +34,6 @@ export const cartRemoveAction = (id) => async (dispatch, getState) => {
 };
 
 export const removeCartItems = () => (dispatch) => {
-  dispatch({ type: ActionType.CART_REMOVE_ITEM });
+  dispatch({ type: ActionType.CLEAR_CART_ITEMS });
   localStorage.removeItem(StorageConst.CART_ITEMS);
 };

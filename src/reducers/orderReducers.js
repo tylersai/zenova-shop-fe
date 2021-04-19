@@ -49,6 +49,9 @@ export const getMyOrdersReducer = (state = { data: [] }, action) => {
     case ActionType.GET_MY_ORDERS_FAIL:
       return { loading: false, data: [], error: action.payload };
 
+    case ActionType.CLEAR_MY_ORDERS:
+      return { loading: false, data: [] };
+
     default:
       return state;
   }

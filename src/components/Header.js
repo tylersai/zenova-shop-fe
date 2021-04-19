@@ -17,7 +17,15 @@ import {
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { logoutAction } from "../actions/userActions";
+import {
+  logoutAction,
+  clearCreatedOrder,
+  clearExistingOrder,
+  clearShippingInfoAction,
+  clearRegisteredUser,
+  removeCartItems,
+  clearMyOrders,
+} from "../actions";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -32,6 +40,12 @@ export const Header = () => {
 
   const goLogout = () => {
     dispatch(logoutAction());
+    dispatch(clearCreatedOrder());
+    dispatch(clearExistingOrder());
+    dispatch(clearShippingInfoAction());
+    dispatch(clearRegisteredUser());
+    dispatch(removeCartItems());
+    dispatch(clearMyOrders());
     history.push("/");
   };
 
