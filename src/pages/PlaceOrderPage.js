@@ -13,7 +13,11 @@ import { CheckoutStepper } from "../components";
 import paypalLogo from "../assets/paypal-seeklogo.com.svg";
 import stripeLogo from "../assets/stripe-seeklogo.com.svg";
 import { Link } from "react-router-dom";
-import { clearExistingOrder, createOrderAction } from "../actions/orderActions";
+import {
+  clearExistingOrder,
+  createOrderAction,
+  removeCartItems,
+} from "../actions/";
 
 export const PlaceOrderPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -67,6 +71,7 @@ export const PlaceOrderPage = ({ history }) => {
       )
     );
     dispatch(clearExistingOrder());
+    dispatch(removeCartItems());
   };
 
   return (

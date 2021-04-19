@@ -32,3 +32,8 @@ export const cartRemoveAction = (id) => async (dispatch, getState) => {
     JSON.stringify(getState().cartState.data)
   );
 };
+
+export const removeCartItems = () => (dispatch) => {
+  dispatch({ type: ActionType.CART_REMOVE_ITEM });
+  localStorage.removeItem(StorageConst.CART_ITEMS);
+};
