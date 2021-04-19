@@ -52,7 +52,7 @@ export const PlaceOrderPage = ({ history }) => {
   const getTaxAmt = () => +(subtotal * 0.05).toFixed(2);
   const taxAmt = getTaxAmt();
 
-  const getTotalAmt = () => subtotal + shippingFee + taxAmt;
+  const getTotalAmt = () => +(subtotal + shippingFee + taxAmt).toFixed(2);
   const totalAmt = getTotalAmt();
 
   const numItems = cartItems.reduce((count, el) => count + +el.qty, 0);
