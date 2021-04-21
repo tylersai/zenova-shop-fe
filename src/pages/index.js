@@ -8,4 +8,5 @@ export * from "./ShippingPage";
 export * from "./PaymentPage";
 export * from "./PlaceOrderPage";
 export * from "./OrderDetailPage";
+export * from "./ProductListPage";
 export * from "./NotFoundPage";
