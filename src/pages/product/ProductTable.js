@@ -7,6 +7,13 @@ export const ProductTable = ({ products = [] }) => {
   if (!(products && products.length > 0)) {
     return <Alert color="info">No Products</Alert>;
   }
+
+  const goDelete = (pid) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      alert("TO-DO: process delete product");
+    }
+  };
+
   return (
     <Table className="ProductTable" hover striped responsive color="dark">
       <thead className="thead-dark">
@@ -15,6 +22,7 @@ export const ProductTable = ({ products = [] }) => {
           <th>Brand</th>
           <th className="text-right">Quantity</th>
           <th className="text-right">Price</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +34,29 @@ export const ProductTable = ({ products = [] }) => {
             <td>{p.brand}</td>
             <td className="text-right">{p.countInStock}</td>
             <td className="text-right">${formatMoney(p.price)}</td>
+            <td>
+              <div
+                style={{
+                  opacity: "0.7",
+                  whiteSpace: "nowrap",
+                  textAlign: "right",
+                }}
+              >
+                <Link to={`/edit/product/${p._id}`}>
+                  <i className="fas fa-pen"></i>
+                </Link>{" "}
+                <span className="mx-2">|</span>
+                <a
+                  href="/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goDelete(p._id);
+                  }}
+                >
+                  <i className="fas fa-trash"></i>
+                </a>
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>
