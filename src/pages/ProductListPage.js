@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LinkContainer } from "react-router-bootstrap";
 import { Alert } from "reactstrap";
 import { productListAction } from "../actions";
 import { Loader } from "../components";
@@ -17,7 +18,15 @@ export const ProductListPage = () => {
 
   return (
     <div className="ProductListPage">
-      <h2 className="mb-3">All Products in Store</h2>
+      <div className="d-flex justify-content-between align-items-center flex-wrap mb-3">
+        <h2 className="mb-0">All Products in Store</h2>
+        <LinkContainer to="/edit/product">
+          <a className="btn btn-dark ml-auto" href="/edit/product">
+            <i className="fas fa-plus"></i> New
+          </a>
+        </LinkContainer>
+      </div>
+
       {loading ? (
         <Loader />
       ) : error ? (
