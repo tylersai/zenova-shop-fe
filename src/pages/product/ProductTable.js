@@ -42,7 +42,7 @@ export const ProductTable = ({ products = [] }) => {
                   textAlign: "right",
                 }}
               >
-                <Link to={`/edit/product/${p._id}`}>
+                <Link to={`/save/product/${p._id}`}>
                   <i className="fas fa-pen"></i>
                 </Link>{" "}
                 <span className="mx-2">|</span>

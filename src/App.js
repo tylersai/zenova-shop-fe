@@ -13,6 +13,7 @@ import {
   PlaceOrderPage,
   OrderDetailPage,
   ProductListPage,
+  ProductInfoPage,
   NotFoundPage,
 } from "./pages/";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -30,14 +31,18 @@ function App() {
                   <Route path="/" exact component={HomePage} />
                   <Route path="/login" exact component={LoginPage} />
                   <Route path="/register" exact component={RegisterPage} />
+                  <Route
+                    path="/save/product/:id?"
+                    component={ProductInfoPage}
+                  />
                   <Route path="/product/:id" exact component={ProductPage} />
                   <Route path="/products" exact component={ProductListPage} />
                   <Route path="/order/:id" exact component={OrderDetailPage} />
                   <Route path="/cart/:id?" component={CartPage} />
-                  <Route path="/profile" component={ProfilePage} />
-                  <Route path="/shipping" component={ShippingPage} />
-                  <Route path="/payment" component={PaymentPage} />
-                  <Route path="/place-order" component={PlaceOrderPage} />
+                  <Route path="/profile" exact component={ProfilePage} />
+                  <Route path="/shipping" exact component={ShippingPage} />
+                  <Route path="/payment" exact component={PaymentPage} />
+                  <Route path="/place-order" exact component={PlaceOrderPage} />
                   <Route path="*" component={NotFoundPage} />
                 </Switch>
               </Col>

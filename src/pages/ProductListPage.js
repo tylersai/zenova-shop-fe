@@ -20,8 +20,8 @@ export const ProductListPage = () => {
     <div className="ProductListPage">
       <div className="d-flex justify-content-between align-items-center flex-wrap mb-3">
         <h2 className="mb-0">All Products in Store</h2>
-        <LinkContainer to="/edit/product">
-          <a className="btn btn-dark ml-auto" href="/edit/product">
+        <LinkContainer to="/save/product">
+          <a className="btn btn-dark ml-auto" href="/save/product">
             <i className="fas fa-plus"></i> New
           </a>
         </LinkContainer>
