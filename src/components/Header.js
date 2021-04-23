@@ -8,11 +8,11 @@ import {
   NavItem,
   NavLink,
   Container,
-  Dropdown,
   DropdownItem,
   DropdownToggle,
   DropdownMenu,
   Badge,
+  UncontrolledDropdown,
 } from "reactstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,13 +30,11 @@ import {
 export const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { data } = useSelector((state) => state.currentUserState);
+  const { data: currentUser } = useSelector((state) => state.currentUserState);
   const cart = useSelector((state) => state.cartState);
   const [isOpen, setIsOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-  const toggleUserMenu = () => setUserMenuOpen(!userMenuOpen);
 
   const goLogout = () => {
     dispatch(logoutAction());
@@ -64,35 +62,47 @@ export const Header = () => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto align-items-center" navbar>
-              <NavItem style={{ marginRight: "1rem" }}>
-                <LinkContainer to="/cart">
-                  <NavLink>
-                    <i className="fas fa-shopping-cart"></i> Cart{" "}
-                    {cartItemCount > 0 && (
-                      <Badge
-                        pill
-                        color="success"
-                        style={{
-                          fontSize: "80%",
-                          position: "absolute",
-                          marginLeft: "4px",
-                          zIndex: 2,
-                        }}
-                      >
-                        {cartItemCount}
-                      </Badge>
-                    )}
-                  </NavLink>
-                </LinkContainer>
-              </NavItem>
-              {data && data._id ? (
-                <Dropdown
-                  isOpen={userMenuOpen}
-                  toggle={toggleUserMenu}
-                  className="ml-2"
-                >
-                  <DropdownToggle color="dark" caret>
-                    {data.name}{" "}
+              {currentUser && currentUser.isAdmin ? (
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Manage{" "}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem onClick={() => history.push("/users")}>
+                      Users
+                    </DropdownItem>
+                    <DropdownItem onClick={() => history.push("/products")}>
+                      Products
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              ) : (
+                <NavItem style={{ marginRight: "1rem" }}>
+                  <LinkContainer to="/cart">
+                    <NavLink>
+                      <i className="fas fa-shopping-cart"></i> Cart{" "}
+                      {cartItemCount > 0 && (
+                        <Badge
+                          pill
+                          color="success"
+                          style={{
+                            fontSize: "80%",
+                            position: "absolute",
+                            marginLeft: "4px",
+                            zIndex: 2,
+                          }}
+                        >
+                          {cartItemCount}
+                        </Badge>
+                      )}
+                    </NavLink>
+                  </LinkContainer>
+                </NavItem>
+              )}
+              {currentUser && currentUser._id ? (
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    {currentUser.name}{" "}
                   </DropdownToggle>
                   <DropdownMenu>
                     <DropdownItem onClick={() => history.push("/profile")}>
@@ -100,7 +110,7 @@ export const Header = () => {
                     </DropdownItem>
                     <DropdownItem onClick={goLogout}>Logout</DropdownItem>
                   </DropdownMenu>
-                </Dropdown>
+                </UncontrolledDropdown>
               ) : (
                 <NavItem className="ml-4 ml-md-3">
                   <LinkContainer to="/login">
