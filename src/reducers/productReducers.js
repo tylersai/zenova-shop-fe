@@ -31,3 +31,19 @@ export const productDetailsReducer = (state = { data: {} }, action) => {
       return state;
   }
 };
+
+export const productFormReducer = (state = { data: {} }, action) => {
+  switch (action.type) {
+    case ActionType.PRODUCT_FORM_REQUEST:
+      return { loading: true, data: state.data };
+
+    case ActionType.PRODUCT_FORM_SUCCESS:
+      return { loading: false, data: action.payload };
+
+    case ActionType.PRODUCT_FORM_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
