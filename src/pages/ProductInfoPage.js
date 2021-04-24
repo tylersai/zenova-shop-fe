@@ -1,23 +1,25 @@
 import React, { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { Alert } from "reactstrap";
-// import { getProductById } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { Alert } from "reactstrap";
+import { productFormGetOrRenewAction } from "../actions";
+import { ProductForm } from "./product";
 
 export const ProductInfoPage = ({ match }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const { loading, data: product, error } = useSelector(
-  //   (state) => state.productFormState
-  // );
+  const { loading, data: product, error } = useSelector(
+    (state) => state.productFormState
+  );
 
-  // useEffect(() => {
-  //   dispatch(getProductById());
-  // }, [dispatch, match.params.id]);
+  useEffect(() => {
+    dispatch(productFormGetOrRenewAction(match.params.id));
+  }, [dispatch, match.params.id]);
 
   return (
     <div className="ProductInfoPage">
       <h2 className="mb-3">Product Info</h2>
-      PID : {match.params.id}
+      {error && <Alert color="danger">{error}</Alert>}
+      <ProductForm loading={loading} product={product} />
     </div>
   );
 };
