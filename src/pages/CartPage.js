@@ -47,7 +47,7 @@ export const CartPage = ({ match, location, history }) => {
                       <Col xs={6} md={3}>
                         <img
                           className="img img-fluid my-2 my-md-0"
-                          src={item.image}
+                          src={process.env.REACT_APP_IMG_BASE_URL + item.image}
                           alt="Product Img"
                         />
                       </Col>

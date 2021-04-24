@@ -38,7 +38,7 @@ export const productDetailsAction = (id) => async (dispatch) => {
   }
 };
 
-export const productFormGetOrRenew = (id = null) => async (dispatch) => {
+export const productFormGetOrRenewAction = (id = null) => async (dispatch) => {
   dispatch({ type: ActionType.PRODUCT_FORM_SUCCESS, payload: new Product() });
   if (id) {
     // Existing product fetch its data

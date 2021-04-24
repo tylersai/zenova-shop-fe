@@ -53,7 +53,11 @@ export const ProductPage = ({ match, history }) => {
       ) : (
         <Row>
           <Col md={6}>
-            <img src={product.image} alt="Product Img" className="img-fluid" />
+            <img
+              src={process.env.REACT_APP_IMG_BASE_URL + product.image}
+              alt="Product Img"
+              className="img-fluid"
+            />
           </Col>
           <Col md={3}>
             <ListGroup>
