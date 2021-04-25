@@ -1,9 +1,15 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { productCreateAction } from "../../actions";
 import { Product } from "../../models";
 
 export const ProductForm = ({ loading, product = new Product() }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
@@ -141,7 +147,17 @@ export const ProductForm = ({ loading, product = new Product() }) => {
   const goSaveOrUpdate = () => {
     clearError();
     if (isValid()) {
-      alert("Process " + (product._id ? "update" : "save"));
+      if (product._id) {
+        // Update
+        alert("Process update");
+      } else {
+        dispatch(
+          productCreateAction(
+            { name, brand, category, countInStock, price, image, description },
+            history
+          )
+        );
+      }
     }
   };
 
