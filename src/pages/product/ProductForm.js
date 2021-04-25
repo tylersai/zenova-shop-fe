@@ -12,6 +12,14 @@ export const ProductForm = ({ loading, product = new Product() }) => {
   const [price, setPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
 
+  const [nameErr, setNameErr] = useState("");
+  const [brandErr, setBrandErr] = useState("");
+  const [categoryErr, setCategoryErr] = useState("");
+  const [descriptionErr, setDescriptionErr] = useState("");
+  const [imageErr, setImageErr] = useState("");
+  const [priceErr, setPriceErr] = useState("");
+  const [countInStockErr, setCountInStockErr] = useState("");
+
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
@@ -44,44 +52,122 @@ export const ProductForm = ({ loading, product = new Product() }) => {
     }
   };
 
-  const goSaveOrUpdate = () =>
-    alert("Process " + (product._id ? "update" : "save"));
+  const clearError = () => {
+    setNameErr("");
+    setBrandErr("");
+    setCategoryErr("");
+    setDescriptionErr("");
+    setImageErr("");
+    setPriceErr("");
+    setCountInStockErr("");
+  };
+
+  const isValid = () => {
+    let nameValid = true;
+    let brandValid = true;
+    let categoryValid = true;
+    let descriptionValid = true;
+    let imageValid = true;
+    let countInStockValid = true;
+    let priceValid = true;
+
+    if (!name) {
+      setNameErr("Name is required");
+      nameValid = false;
+    }
+
+    if (!brand) {
+      setBrandErr("Brand is required");
+      brandValid = false;
+    }
+
+    if (!category) {
+      setCategoryErr("Category is required");
+      categoryValid = false;
+    }
+
+    if (!description) {
+      setDescriptionErr("Description is required");
+      descriptionValid = false;
+    }
+
+    if (!image) {
+      setImageErr("Image is required");
+      imageValid = false;
+    }
+
+    if (!price) {
+      setPriceErr("Price is required");
+      priceValid = false;
+    }
+
+    if (!countInStock) {
+      setCountInStockErr("In Stock Qty is required");
+      countInStockValid = false;
+    }
+
+    return (
+      nameValid &&
+      brandValid &&
+      categoryValid &&
+      descriptionValid &&
+      imageValid &&
+      countInStockValid &&
+      priceValid
+    );
+  };
+
+  const goSaveOrUpdate = () => {
+    clearError();
+    if (isValid()) {
+      alert("Process " + (product._id ? "update" : "save"));
+    }
+  };
 
   return (
     <Form className="ProductForm">
       <FormGroup>
         <Label htmlFor="name">Name</Label>
         <Input
+          className={nameErr && "is-invalid"}
           type="text"
           id="name"
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
+        {nameErr && <div class="invalid-feedback">{nameErr}</div>}
       </FormGroup>
       <Row>
         <Col md={6}>
           <FormGroup>
             <Label htmlFor="brand">Brand</Label>
             <Input
+              className={brandErr && "is-invalid"}
               type="text"
               id="brand"
               name="brand"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
+              required
             />
+            {brandErr && <div class="invalid-feedback">{brandErr}</div>}
           </FormGroup>
         </Col>
         <Col md={6}>
           <FormGroup>
             <Label htmlFor="category">Category</Label>
             <Input
+              className={categoryErr && "is-invalid"}
               type="text"
               id="category"
               name="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              required
             />
+            {categoryErr && <div class="invalid-feedback">{categoryErr}</div>}
           </FormGroup>
         </Col>
       </Row>
@@ -91,24 +177,32 @@ export const ProductForm = ({ loading, product = new Product() }) => {
           <FormGroup>
             <Label htmlFor="price">Price</Label>
             <Input
+              className={priceErr && "is-invalid"}
               type="text"
               id="price"
               name="price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              required
             />
+            {priceErr && <div class="invalid-feedback">{priceErr}</div>}
           </FormGroup>
         </Col>
         <Col md={6}>
           <FormGroup>
             <Label htmlFor="countInStock">In Stock Qty</Label>
             <Input
+              className={countInStockErr && "is-invalid"}
               type="text"
               id="countInStock"
               name="countInStock"
               value={countInStock}
               onChange={(e) => setCountInStock(e.target.value)}
+              required
             />
+            {countInStockErr && (
+              <div class="invalid-feedback">{countInStockErr}</div>
+            )}
           </FormGroup>
         </Col>
       </Row>
@@ -117,18 +211,30 @@ export const ProductForm = ({ loading, product = new Product() }) => {
         <Col md={6}>
           <FormGroup>
             <Label htmlFor="image">Image</Label>
-            <Input type="text" id="image" name="image" value={image} disabled />
+            <Input
+              type="text"
+              id="image"
+              name="image"
+              value={image}
+              disabled
+              required
+            />
+            {imageErr && (
+              <div class="invalid-feedback d-none d-md-block">&nbsp;</div>
+            )}
           </FormGroup>
         </Col>
         <Col md={6}>
           <FormGroup>
             <Input
-              className="form-control"
+              className={"form-control" + (imageErr ? " is-invalid" : "")}
               type="file"
               id="imgFile"
               disabled={loading || uploading}
               onChange={goUploadImage}
+              required
             />
+            {imageErr && <div class="invalid-feedback">{imageErr}</div>}
           </FormGroup>
         </Col>
       </Row>
@@ -136,12 +242,15 @@ export const ProductForm = ({ loading, product = new Product() }) => {
       <FormGroup>
         <Label htmlFor="description">Description</Label>
         <Input
+          className={descriptionErr && "is-invalid"}
           type="textarea"
           id="description"
           name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         />
+        {descriptionErr && <div class="invalid-feedback">{descriptionErr}</div>}
       </FormGroup>
 
       <Button
