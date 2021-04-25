@@ -147,6 +147,13 @@ export const ProductForm = ({ loading, product = new Product() }) => {
 
   return (
     <Form className="ProductForm">
+      {product._id && (
+        <FormGroup>
+          <p>
+            PID : <span className="text-info">{product._id}</span>
+          </p>
+        </FormGroup>
+      )}
       <FormGroup>
         <Label htmlFor="name">Name</Label>
         <Input

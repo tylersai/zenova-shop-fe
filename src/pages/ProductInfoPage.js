@@ -17,7 +17,7 @@ export const ProductInfoPage = ({ match }) => {
 
   return (
     <div className="ProductInfoPage">
-      <h2 className="mb-3">Product Info</h2>
+      <h2 className="mb-3">{match.params.id && "Edit"} Product Info</h2>
       {error && <Alert color="danger">{error}</Alert>}
       <ProductForm loading={loading} product={product} />
     </div>
