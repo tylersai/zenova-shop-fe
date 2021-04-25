@@ -60,7 +60,7 @@ export const Rating = ({ rating, reviews }) => {
         ></i>
       </span>
       <span className="d-inline-block ml-3">
-        {reviews && `${reviews} reviews`}
+        {reviews && reviews > 0 ? `${reviews} reviews` : ""}
       </span>
     </div>
   );
