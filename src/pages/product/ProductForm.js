@@ -99,10 +99,25 @@ export const ProductForm = ({ loading, product = new Product() }) => {
     if (!price) {
       setPriceErr("Price is required");
       priceValid = false;
+    } else if (isNaN(price)) {
+      setPriceErr("Invalid price");
+      priceValid = false;
+    } else if (+price < 0.01) {
+      setPriceErr("Price is too low");
+      priceValid = false;
     }
 
     if (!countInStock) {
       setCountInStockErr("In Stock Qty is required");
+      countInStockValid = false;
+    } else if (isNaN(countInStock)) {
+      setCountInStockErr("Invalid In Stock Qty");
+      countInStockValid = false;
+    } else if (!Number.isInteger(+countInStock)) {
+      setCountInStockErr("In Stock Qty must be an integer");
+      countInStockValid = false;
+    } else if (+countInStock < 0) {
+      setCountInStockErr("In Stock Qty must be positive value");
       countInStockValid = false;
     }
 
