@@ -41,7 +41,7 @@ export const productFormReducer = (state = { data: {} }, action) => {
       return { loading: false, data: action.payload };
 
     case ActionType.PRODUCT_FORM_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, data: state.data, error: action.payload };
 
     default:
       return state;

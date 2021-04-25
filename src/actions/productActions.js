@@ -92,3 +92,32 @@ export const productCreateAction = (product = new Product(), history) => async (
     });
   }
 };
+
+export const productUpdateAction = (id, product = new Product()) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: ActionType.PRODUCT_FORM_REQUEST });
+    const { currentUserState } = getState();
+
+    const res = await axios.put("/products/" + id, product, {
+      headers: {
+        Authorization:
+          currentUserState.data &&
+          currentUserState.data.access_token &&
+          `Bearer ${currentUserState.data.access_token}`,
+      },
+    });
+
+    dispatch({ type: ActionType.PRODUCT_FORM_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: ActionType.PRODUCT_FORM_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

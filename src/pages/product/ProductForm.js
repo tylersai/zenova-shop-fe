@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
-import { productCreateAction } from "../../actions";
+import { productCreateAction, productUpdateAction } from "../../actions";
 import { Product } from "../../models";
 
 export const ProductForm = ({ loading, product = new Product() }) => {
@@ -149,8 +149,19 @@ export const ProductForm = ({ loading, product = new Product() }) => {
     if (isValid()) {
       if (product._id) {
         // Update
-        alert("Process update");
+        dispatch(
+          productUpdateAction(product._id, {
+            name,
+            brand,
+            category,
+            countInStock,
+            price,
+            image,
+            description,
+          })
+        );
       } else {
+        // Save
         dispatch(
           productCreateAction(
             { name, brand, category, countInStock, price, image, description },
