@@ -46,9 +46,15 @@ export const ProductForm = ({ loading, product = new Product() }) => {
       });
       setUploading(false);
       setImage(data.imagePath);
+      setImageErr("");
     } catch (error) {
       setUploading(false);
       setImage("");
+      setImageErr(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
     }
   };
 
@@ -149,7 +155,10 @@ export const ProductForm = ({ loading, product = new Product() }) => {
           id="name"
           name="name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setNameErr("");
+            setName(e.target.value);
+          }}
           required
         />
         {nameErr && <div class="invalid-feedback">{nameErr}</div>}
@@ -164,7 +173,10 @@ export const ProductForm = ({ loading, product = new Product() }) => {
               id="brand"
               name="brand"
               value={brand}
-              onChange={(e) => setBrand(e.target.value)}
+              onChange={(e) => {
+                setBrandErr("");
+                setBrand(e.target.value);
+              }}
               required
             />
             {brandErr && <div class="invalid-feedback">{brandErr}</div>}
@@ -179,7 +191,10 @@ export const ProductForm = ({ loading, product = new Product() }) => {
               id="category"
               name="category"
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => {
+                setCategoryErr("");
+                setCategory(e.target.value);
+              }}
               required
             />
             {categoryErr && <div class="invalid-feedback">{categoryErr}</div>}
@@ -197,7 +212,10 @@ export const ProductForm = ({ loading, product = new Product() }) => {
               id="price"
               name="price"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) => {
+                setPriceErr("");
+                setPrice(e.target.value);
+              }}
               required
             />
             {priceErr && <div class="invalid-feedback">{priceErr}</div>}
@@ -212,7 +230,10 @@ export const ProductForm = ({ loading, product = new Product() }) => {
               id="countInStock"
               name="countInStock"
               value={countInStock}
-              onChange={(e) => setCountInStock(e.target.value)}
+              onChange={(e) => {
+                setCountInStockErr("");
+                setCountInStock(e.target.value);
+              }}
               required
             />
             {countInStockErr && (
@@ -262,7 +283,10 @@ export const ProductForm = ({ loading, product = new Product() }) => {
           id="description"
           name="description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => {
+            setDescriptionErr("");
+            setDescription(e.target.value);
+          }}
           required
         />
         {descriptionErr && <div class="invalid-feedback">{descriptionErr}</div>}
