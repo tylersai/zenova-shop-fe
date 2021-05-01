@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Alert, Table } from "reactstrap";
+import {
+  Alert,
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Table,
+} from "reactstrap";
 import { formatMoney } from "../../utils/formats";
 
 export const ProductTable = ({ products = [] }) => {
+  const [modal, setModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
   if (!(products && products.length > 0)) {
     return <Alert color="info">No Products</Alert>;
   }
+
+  const toggle = () => setModal(!modal);
 
   const goDelete = (pid) => {
     if (window.confirm("Are you sure you want to delete?")) {
@@ -50,7 +63,8 @@ export const ProductTable = ({ products = [] }) => {
                   href="/"
                   onClick={(e) => {
                     e.preventDefault();
-                    goDelete(p._id);
+                    setSelectedItem(p);
+                    toggle();
                   }}
                 >
                   <i className="fas fa-trash"></i>
@@ -60,6 +74,32 @@ export const ProductTable = ({ products = [] }) => {
           </tr>
         ))}
       </tbody>
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader>Delete Product</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete{" "}
+          <Link
+            to={`/product/${selectedItem?._id}`}
+            className="font-weight-bold"
+          >
+            {selectedItem?.name}
+          </Link>
+          ?
+          <br />
+          <br />
+          <span>Brand: {selectedItem?.brand}</span>
+          <br />
+          <span>Price: ${formatMoney(selectedItem?.price)}</span>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button className="ml-2" color="danger" onClick={toggle}>
+            Delete
+          </Button>
+        </ModalFooter>
+      </Modal>
     </Table>
   );
 };
