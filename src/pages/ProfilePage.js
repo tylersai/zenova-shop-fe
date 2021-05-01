@@ -13,26 +13,28 @@ export const ProfilePage = () => {
   );
 
   useEffect(() => {
-    dispatch(getMyOrdersAction());
-  }, [dispatch]);
+    currentUser && !currentUser.isAdmin && dispatch(getMyOrdersAction());
+  }, [dispatch, currentUser]);
 
   return (
     <div className="ProfilePage">
-      <Row>
+      <Row className="justify-content-center">
         <Col xs={12} md={4}>
           {currentUser && currentUser._id && (
             <ProfileCard name={currentUser.name} email={currentUser.email} />
           )}
         </Col>
-        <Col xs={12} md={8}>
-          {loading ? (
-            <Loader />
-          ) : error ? (
-            <Alert color="danger">{error}</Alert>
-          ) : (
-            <OrderList orders={orders} />
-          )}
-        </Col>
+        {currentUser && !currentUser.isAdmin && (
+          <Col xs={12} md={8}>
+            {loading ? (
+              <Loader />
+            ) : error ? (
+              <Alert color="danger">{error}</Alert>
+            ) : (
+              <OrderList orders={orders} />
+            )}
+          </Col>
+        )}
       </Row>
     </div>
   );
