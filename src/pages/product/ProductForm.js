@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { productCreateAction, productUpdateAction } from "../../actions";
 import { Product } from "../../models";
@@ -177,7 +177,10 @@ export const ProductForm = ({ loading, product = new Product() }) => {
       {product._id && (
         <FormGroup>
           <p>
-            PID : <span className="text-info">{product._id}</span>
+            PID :{" "}
+            <Link to={`/product/${product._id}`} className="text-info">
+              {product._id}
+            </Link>
           </p>
         </FormGroup>
       )}
