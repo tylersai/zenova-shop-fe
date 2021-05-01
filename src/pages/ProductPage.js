@@ -18,6 +18,7 @@ export const ProductPage = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
+  const { data: currentUser } = useSelector((state) => state.currentUserState);
   const productDetailsState = useSelector((state) => state.productDetailsState);
   const { loading, data, error } = productDetailsState;
   const product = data;
@@ -100,6 +101,10 @@ export const ProductPage = ({ match, history }) => {
                           bsSize="sm"
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
+                          disabled={
+                            product.countInStock === 0 ||
+                            (currentUser && currentUser.isAdmin)
+                          }
                         >
                           {[...Array(product.countInStock).keys()].map((o) => (
                             <option key={o + 1} value={o + 1}>
@@ -115,7 +120,10 @@ export const ProductPage = ({ match, history }) => {
                   <Button
                     block
                     color="dark"
-                    disabled={product.countInStock === 0}
+                    disabled={
+                      product.countInStock === 0 ||
+                      (currentUser && currentUser.isAdmin)
+                    }
                     onClick={processAddToCard}
                   >
                     Add To Cart
