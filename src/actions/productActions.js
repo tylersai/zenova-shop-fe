@@ -121,3 +121,30 @@ export const productUpdateAction = (id, product = new Product()) => async (
     });
   }
 };
+
+export const productDeleteAction = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ActionType.PRODUCT_FORM_REQUEST });
+    const { currentUserState } = getState();
+
+    await axios.delete("/products/" + id, {
+      headers: {
+        Authorization:
+          currentUserState.data &&
+          currentUserState.data.access_token &&
+          `Bearer ${currentUserState.data.access_token}`,
+      },
+    });
+    const res = await axios.get("/products");
+
+    dispatch({ type: ActionType.PRODUCT_LIST_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: ActionType.PRODUCT_FORM_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

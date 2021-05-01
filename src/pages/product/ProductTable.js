@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   Alert,
@@ -10,8 +11,11 @@ import {
   Table,
 } from "reactstrap";
 import { formatMoney } from "../../utils/formats";
+import { productDeleteAction } from "../../actions";
 
 export const ProductTable = ({ products = [] }) => {
+  const dispatch = useDispatch();
+
   const [modal, setModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -21,10 +25,9 @@ export const ProductTable = ({ products = [] }) => {
 
   const toggle = () => setModal(!modal);
 
-  const goDelete = (pid) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      alert("TO-DO: process delete product");
-    }
+  const goDelete = (item) => {
+    dispatch(productDeleteAction(item._id));
+    setModal(false);
   };
 
   return (
@@ -95,7 +98,11 @@ export const ProductTable = ({ products = [] }) => {
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>
-          <Button className="ml-2" color="danger" onClick={toggle}>
+          <Button
+            className="ml-2"
+            color="danger"
+            onClick={() => goDelete(selectedItem)}
+          >
             Delete
           </Button>
         </ModalFooter>
