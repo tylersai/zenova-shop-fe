@@ -71,13 +71,11 @@ export const OrderListPage = () => {
         {loading ? (
           <Loader />
         ) : error ? (
-          <Alert color="danger" role="status">
-            {error}
-          </Alert>
+          <Alert color="danger">{error}</Alert>
+        ) : data && data.contents && data.contents.length > 0 ? (
+          <OrderTable orders={data.contents} />
         ) : (
-          data &&
-          data.contents &&
-          data.contents.length > 0 && <OrderTable orders={data.contents} />
+          <Alert color="info">No orders available</Alert>
         )}
       </div>
     </div>
