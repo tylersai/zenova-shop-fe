@@ -77,6 +77,9 @@ export const Header = () => {
                     <DropdownItem onClick={() => history.push("/products")}>
                       Product List
                     </DropdownItem>
+                    <DropdownItem onClick={() => history.push("/orders")}>
+                      Customer Orders
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               ) : (
