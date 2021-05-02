@@ -69,7 +69,7 @@ export const OrderListPage = () => {
       </Nav>
       <div className="pt-3 px-2">
         {loading ? (
-          <Loader />
+          <Loader delay={200} />
         ) : error ? (
           <Alert color="danger">{error}</Alert>
         ) : data && data.contents && data.contents.length > 0 ? (
