@@ -1,4 +1,5 @@
 import { ActionType } from "../constants";
+import { getPaginationResObj } from "../utils/constants";
 
 export const createOrderReducer = (state = { data: null }, action) => {
   switch (action.type) {
@@ -51,6 +52,29 @@ export const getMyOrdersReducer = (state = { data: [] }, action) => {
 
     case ActionType.CLEAR_MY_ORDERS:
       return { loading: false, data: [] };
+
+    default:
+      return state;
+  }
+};
+
+export const getOrdersReducer = (
+  state = { data: getPaginationResObj() },
+  action
+) => {
+  switch (action.type) {
+    case ActionType.ORDER_LIST_REQUEST:
+      return { loading: true, data: getPaginationResObj() };
+
+    case ActionType.ORDER_LIST_SUCCESS:
+      return { loading: false, data: action.payload };
+
+    case ActionType.ORDER_LIST_FAIL:
+      return {
+        loading: false,
+        data: getPaginationResObj(),
+        error: action.payload,
+      };
 
     default:
       return state;

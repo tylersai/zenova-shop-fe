@@ -13,6 +13,7 @@ import {
   getOrderByIdReducer,
   getMyOrdersReducer,
   productFormReducer,
+  getOrdersReducer,
 } from "./reducers";
 import { StorageConst } from "./constants";
 
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   orderDetailsState: getOrderByIdReducer,
   myOrdersState: getMyOrdersReducer,
   productFormState: productFormReducer,
+  orderPaginationState: getOrdersReducer,
 });
 
 const cartItemsFromStorage = JSON.parse(

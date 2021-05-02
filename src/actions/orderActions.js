@@ -133,3 +133,33 @@ export const payOrderAction = (orderId, paymentResult) => async (
     });
   }
 };
+
+export const getOrders = (
+  type = "paid-but-not-delivered",
+  page = 1,
+  size = 10
+) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ActionType.ORDER_LIST_REQUEST });
+    const { currentUserState } = getState();
+
+    const res = await axios.get(`/orders/${type}?page=${page}&size=${size}`, {
+      headers: {
+        Authorization:
+          currentUserState.data &&
+          currentUserState.data.access_token &&
+          `Bearer ${currentUserState.data.access_token}`,
+      },
+    });
+
+    dispatch({ type: ActionType.ORDER_LIST_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ORDER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
