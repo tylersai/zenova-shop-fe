@@ -10,4 +10,5 @@ export * from "./PlaceOrderPage";
 export * from "./OrderDetailPage";
 export * from "./ProductListPage";
 export * from "./ProductInfoPage";
+export * from "./OrderListPage";
 export * from "./NotFoundPage";
