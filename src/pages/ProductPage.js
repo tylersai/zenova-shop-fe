@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
@@ -19,6 +20,7 @@ import {
 import { productDetailsAction } from "../actions";
 import { Loader, Rating } from "../components";
 import { formatMoney } from "../utils/formats";
+import { getHeaderConfig } from "../utils/functions";
 
 export const ProductPage = ({ match, history }) => {
   const id = match.params.id;
@@ -50,8 +52,17 @@ export const ProductPage = ({ match, history }) => {
   const toggle = () => setModal(!modal);
 
   const goDelete = () => {
-    // dispatch(productDeleteAction(id));
     setModal(false);
+    axios
+      .delete(`/products/${id}`, getHeaderConfig(currentUser))
+      .then((res) => res.data.success && history.goBack())
+      .catch((error) =>
+        alert(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        )
+      );
   };
 
   return (
