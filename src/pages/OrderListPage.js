@@ -73,7 +73,7 @@ export const OrderListPage = () => {
         ) : error ? (
           <Alert color="danger">{error}</Alert>
         ) : data && data.contents && data.contents.length > 0 ? (
-          <OrderTable orders={data.contents} />
+          <OrderTable orders={data.contents} orderType={orderType} />
         ) : (
           <Alert color="info">No orders available</Alert>
         )}

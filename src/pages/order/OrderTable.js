@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Table } from "reactstrap";
 import { formatMoney } from "../../utils/formats";
 
-export const OrderTable = ({ orders = [] }) => {
+export const OrderTable = ({ orders = [], orderType }) => {
   return (
     <Table className="OrderTable" hover striped responsive color="dark">
       <thead className="thead-dark">
@@ -12,6 +12,13 @@ export const OrderTable = ({ orders = [] }) => {
           <th>Customer Name</th>
           <th>Customer Email</th>
           <th>Shipping Address</th>
+          <th>
+            {orderType === "delivered"
+              ? "Delivered On"
+              : orderType === "paid-but-not-delivered"
+              ? "Paid On"
+              : "Placed On"}
+          </th>
           <th className="text-right">Amount</th>
         </tr>
       </thead>
@@ -29,6 +36,13 @@ export const OrderTable = ({ orders = [] }) => {
               <span>
                 {o.shippingInfo.city}, {o.shippingInfo.country}
               </span>
+            </td>
+            <td>
+              {orderType === "delivered"
+                ? o.deliveredAt.substr(0, 10)
+                : orderType === "paid-but-not-delivered"
+                ? o.paidAt.substr(0, 10)
+                : o.createdAt.substr(0, 10)}
             </td>
             <td className="text-right">${formatMoney(o.totalAmount)}</td>
           </tr>
