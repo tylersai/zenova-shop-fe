@@ -26,7 +26,7 @@ export const getOrderByIdReducer = (state = { data: null }, action) => {
       return { loading: true, data: null };
 
     case ActionType.ORDER_DETAILS_REQUEST_OLD_DATA:
-      return { loading: true, data: state.data };
+      return { processing: true, data: state.data };
 
     case ActionType.ORDER_DETAILS_SUCCESS:
       return { loading: false, data: action.payload };

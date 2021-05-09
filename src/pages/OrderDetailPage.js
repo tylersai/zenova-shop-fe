@@ -2,17 +2,22 @@ import React, { useEffect } from "react";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Alert, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
-import { getOrderByIdAction, payOrderAction } from "../actions/orderActions";
+import { Alert, Button, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import {
+  deliverOrderAction,
+  getOrderByIdAction,
+  payOrderAction,
+} from "../actions/orderActions";
 import { Loader } from "../components";
 
 export const OrderDetailPage = ({ match }) => {
   const orderId = match.params.id;
   const dispatch = useDispatch();
 
-  const { loading, error, data } = useSelector(
+  const { loading, error, data, processing } = useSelector(
     (state) => state.orderDetailsState
   );
+  const { data: currentUser } = useSelector((state) => state.currentUserState);
 
   useEffect(() => {
     orderId && dispatch(getOrderByIdAction(orderId));
@@ -21,6 +26,8 @@ export const OrderDetailPage = ({ match }) => {
 
   const onPaymentSuccess = (paymentResult) =>
     dispatch(payOrderAction(orderId, paymentResult));
+
+  const markAsDelivered = () => dispatch(deliverOrderAction(orderId));
 
   return (
     <div className="OrderDetailPage">
@@ -109,6 +116,16 @@ export const OrderDetailPage = ({ match }) => {
                     <Alert color="info" className="mb-2">
                       Delivered on {data.deliveredAt.substr(0, 10)}
                     </Alert>
+                  ) : currentUser.isAdmin ? (
+                    <Button
+                      block
+                      color="dark"
+                      className="mb-2"
+                      onClick={markAsDelivered}
+                      disabled={processing}
+                    >
+                      Mark as Delivered
+                    </Button>
                   ) : (
                     <Alert color="danger" className="mb-2">
                       Not Delivered
