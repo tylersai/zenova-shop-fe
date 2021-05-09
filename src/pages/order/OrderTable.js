@@ -9,8 +9,7 @@ export const OrderTable = ({ orders = [], orderType }) => {
       <thead className="thead-dark">
         <tr>
           <th>Order ID</th>
-          <th>Customer Name</th>
-          <th>Customer Email</th>
+          <th>Customer</th>
           <th>Shipping Address</th>
           <th>
             {orderType === "delivered"
@@ -28,8 +27,12 @@ export const OrderTable = ({ orders = [], orderType }) => {
             <td>
               <Link to={`/order/${o._id}`}>{o._id}</Link>
             </td>
-            <td>{o.user}</td>
-            <td>{o.user}</td>
+            <td>
+              <p className="mb-2">{o.user.name}</p>
+              <a className="text-info" href={`mailto:${o.user.email}`}>
+                {o.user.email}
+              </a>
+            </td>
             <td>
               <span>{o.shippingInfo.address}</span>
               <br />
@@ -39,10 +42,10 @@ export const OrderTable = ({ orders = [], orderType }) => {
             </td>
             <td>
               {orderType === "delivered"
-                ? o.deliveredAt.substr(0, 10)
+                ? o.deliveredAt?.substr(0, 10)
                 : orderType === "paid-but-not-delivered"
-                ? o.paidAt.substr(0, 10)
-                : o.createdAt.substr(0, 10)}
+                ? o.paidAt?.substr(0, 10)
+                : o.createdAt?.substr(0, 10)}
             </td>
             <td className="text-right">${formatMoney(o.totalAmount)}</td>
           </tr>
