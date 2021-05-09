@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
 import {
   Row,
   Col,
@@ -10,9 +11,14 @@ import {
   Button,
   Alert,
   Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { productDetailsAction } from "../actions";
 import { Loader, Rating } from "../components";
+import { formatMoney } from "../utils/formats";
 
 export const ProductPage = ({ match, history }) => {
   const id = match.params.id;
@@ -24,6 +30,7 @@ export const ProductPage = ({ match, history }) => {
   const { loading, data, error } = productDetailsState;
   const product = data;
 
+  const [modal, setModal] = useState(false);
   const [qty, setQty] = useState(1);
 
   useEffect(() => {
@@ -38,6 +45,13 @@ export const ProductPage = ({ match, history }) => {
   const goBack = (e) => {
     e.preventDefault();
     history.goBack();
+  };
+
+  const toggle = () => setModal(!modal);
+
+  const goDelete = () => {
+    // dispatch(productDeleteAction(id));
+    setModal(false);
   };
 
   return (
@@ -137,23 +151,48 @@ export const ProductPage = ({ match, history }) => {
               </ListGroup>
             </Card>
             {currentUser.isAdmin && (
-              <Row className="mt-3">
-                <Col className="pr-2">
-                  <LinkContainer to={`/save/product/${id}`}>
-                    <a
-                      className="btn btn-dark d-block"
-                      href={`/save/product/${id}`}
-                    >
-                      <i className="fas fa-pen"></i> Edit
-                    </a>
-                  </LinkContainer>
-                </Col>
-                <Col className="pl-2">
-                  <Button block color="danger">
-                    <i className="fas fa-trash"></i> Delete
-                  </Button>
-                </Col>
-              </Row>
+              <>
+                <Row className="mt-3">
+                  <Col className="pr-2">
+                    <LinkContainer to={`/save/product/${id}`}>
+                      <a
+                        className="btn btn-dark d-block"
+                        href={`/save/product/${id}`}
+                      >
+                        <i className="fas fa-pen"></i> Edit
+                      </a>
+                    </LinkContainer>
+                  </Col>
+                  <Col className="pl-2">
+                    <Button block color="danger" onClick={() => toggle()}>
+                      <i className="fas fa-trash"></i> Delete
+                    </Button>
+                  </Col>
+                </Row>
+                <Modal isOpen={modal} toggle={toggle}>
+                  <ModalHeader>Delete Product</ModalHeader>
+                  <ModalBody>
+                    Are you sure you want to delete{" "}
+                    <Link to={`/product/${id}`} className="font-weight-bold">
+                      {product.name}
+                    </Link>
+                    ?
+                    <br />
+                    <br />
+                    <span>Brand: {product.brand}</span>
+                    <br />
+                    <span>Price: ${formatMoney(product.price)}</span>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="secondary" onClick={toggle}>
+                      Cancel
+                    </Button>
+                    <Button className="ml-2" color="danger" onClick={goDelete}>
+                      Delete
+                    </Button>
+                  </ModalFooter>
+                </Modal>
+              </>
             )}
           </Col>
         </Row>
