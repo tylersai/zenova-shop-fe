@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LinkContainer } from "react-router-bootstrap";
 import {
   Row,
   Col,
@@ -135,6 +136,25 @@ export const ProductPage = ({ match, history }) => {
                 </ListGroupItem>
               </ListGroup>
             </Card>
+            {currentUser.isAdmin && (
+              <Row className="mt-3">
+                <Col className="pr-2">
+                  <LinkContainer to={`/save/product/${id}`}>
+                    <a
+                      className="btn btn-dark d-block"
+                      href={`/save/product/${id}`}
+                    >
+                      <i className="fas fa-pen"></i> Edit
+                    </a>
+                  </LinkContainer>
+                </Col>
+                <Col className="pl-2">
+                  <Button block color="danger">
+                    <i className="fas fa-trash"></i> Delete
+                  </Button>
+                </Col>
+              </Row>
+            )}
           </Col>
         </Row>
       )}
