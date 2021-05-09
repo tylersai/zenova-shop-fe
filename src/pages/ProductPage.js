@@ -77,17 +77,21 @@ export const ProductPage = ({ match, history }) => {
               <ListGroup flush>
                 <ListGroupItem>
                   <Row>
-                    <Col>Price:</Col>
-                    <Col>
+                    <Col xs={5}>Price:</Col>
+                    <Col xs={7}>
                       <strong>${product.price}</strong>
                     </Col>
                   </Row>
                 </ListGroupItem>
                 <ListGroupItem>
                   <Row>
-                    <Col>Status:</Col>
-                    <Col>
-                      {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                    <Col xs={5}>Status:</Col>
+                    <Col xs={7}>
+                      {product.countInStock > 0 ? (
+                        <span className="text-success">In Stock</span>
+                      ) : (
+                        <span className="text-danger">Out of Stock</span>
+                      )}
                     </Col>
                   </Row>
                 </ListGroupItem>
