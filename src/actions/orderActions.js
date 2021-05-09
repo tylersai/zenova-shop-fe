@@ -113,7 +113,34 @@ export const payOrderAction = (orderId, paymentResult) => async (
   try {
     const { currentUserState } = getState();
 
+    dispatch({ type: ActionType.ORDER_DETAILS_REQUEST_OLD_DATA });
     const res = await axios.put(`/orders/${orderId}/pay`, paymentResult, {
+      headers: {
+        Authorization:
+          currentUserState.data &&
+          currentUserState.data.access_token &&
+          `Bearer ${currentUserState.data.access_token}`,
+      },
+    });
+
+    dispatch({ type: ActionType.ORDER_DETAILS_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ORDER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deliverOrderAction = (orderId) => async (dispatch, getState) => {
+  try {
+    const { currentUserState } = getState();
+
+    dispatch({ type: ActionType.ORDER_DETAILS_REQUEST_OLD_DATA });
+    const res = await axios.put(`/orders/${orderId}/deliver`, null, {
       headers: {
         Authorization:
           currentUserState.data &&
