@@ -40,7 +40,7 @@ export const EditUserPage = ({ history }) => {
               <i className="fas fa-chevron-left mr-2"></i>
               Back
             </a>
-            <h2 className="text-center ml-5 my-0">Edit Profile</h2>
+            <h3 className="text-center ml-5 my-0">Edit Profile</h3>
           </div>
           {error && <Alert color="danger">{error}</Alert>}
           <Form onSubmit={goUpdateProfile}>

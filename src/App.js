@@ -16,6 +16,7 @@ import {
   ProductInfoPage,
   OrderListPage,
   EditUserPage,
+  ChangePasswordPage,
   NotFoundPage,
 } from "./pages/";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -34,6 +35,11 @@ function App() {
                   <Route path="/login" exact component={LoginPage} />
                   <Route path="/register" exact component={RegisterPage} />
                   <Route path="/edit-profile" exact component={EditUserPage} />
+                  <Route
+                    path="/change-password"
+                    exact
+                    component={ChangePasswordPage}
+                  />
                   <Route
                     path="/save/product/:id?"
                     component={ProductInfoPage}
