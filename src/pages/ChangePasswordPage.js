@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Alert,
   Button,
@@ -9,11 +9,25 @@ import {
   FormGroup,
   Input,
   Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
   Row,
 } from "reactstrap";
 import { getHeaderConfig } from "../utils/functions";
+import {
+  logoutAction,
+  clearCreatedOrder,
+  clearExistingOrder,
+  clearShippingInfoAction,
+  clearRegisteredUser,
+  removeCartItems,
+  clearMyOrders,
+} from "../actions";
 
 export const ChangePasswordPage = ({ history }) => {
+  const dispatch = useDispatch();
   const { data: currentUser } = useSelector((state) => state.currentUserState);
 
   const [currentPassword, setCurrentPassword] = useState("");
@@ -22,6 +36,21 @@ export const ChangePasswordPage = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
+  const redirect = () => setTimeout(() => history.push("/login"), 800);
+
+  const goLogoutAndRelogin = () => {
+    dispatch(logoutAction());
+    dispatch(clearCreatedOrder());
+    dispatch(clearExistingOrder());
+    dispatch(clearShippingInfoAction());
+    dispatch(clearRegisteredUser());
+    dispatch(removeCartItems());
+    dispatch(clearMyOrders());
+  };
 
   const goChangePassword = (e) => {
     e.preventDefault();
@@ -35,8 +64,12 @@ export const ChangePasswordPage = ({ history }) => {
         getHeaderConfig(currentUser)
       )
       .then((res) => {
-        setLoading(false);
         res.data.success && setSuccess(res.data.message);
+        goLogoutAndRelogin();
+        setTimeout(() => {
+          toggle();
+          setLoading(false);
+        }, 1600);
       })
       .catch((error) => {
         setLoading(false);
@@ -113,6 +146,15 @@ export const ChangePasswordPage = ({ history }) => {
           </Form>
         </Col>
       </Row>
+      <Modal isOpen={isOpen} toggle={toggle} onClosed={redirect}>
+        <ModalHeader>Redirect</ModalHeader>
+        <ModalBody>Please logout and login again.</ModalBody>
+        <ModalFooter>
+          <Button color="dark" onClick={toggle}>
+            Logout
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };
