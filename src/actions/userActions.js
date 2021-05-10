@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ActionType, StorageConst } from "../constants/";
+import { getHeaderConfig } from "../utils/functions";
 
 export const registerUserAction = (
   name,
@@ -50,4 +51,32 @@ export const loginAction = (email, password) => async (dispatch) => {
 export const logoutAction = () => async (dispatch) => {
   dispatch({ type: ActionType.USER_LOGOUT });
   localStorage.removeItem(StorageConst.CURRENT_USER);
+};
+
+export const updateProfileAction = (name, email) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: ActionType.LOGIN_USER_UPDATE_REQUEST });
+    await axios.put(
+      "/users/profile",
+      { name, email },
+      getHeaderConfig(getState)
+    );
+    dispatch({
+      type: ActionType.LOGIN_USER_UPDATE_SUCCESS,
+      payload: { name, email },
+    });
+    const newData = { ...getState().currentUserState.data, name, email };
+    localStorage.setItem(StorageConst.CURRENT_USER, JSON.stringify(newData));
+  } catch (error) {
+    dispatch({
+      type: ActionType.LOGIN_USER_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
