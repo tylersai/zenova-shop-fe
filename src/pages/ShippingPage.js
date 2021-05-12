@@ -8,10 +8,10 @@ export const ShippingPage = ({ history }) => {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.shippingInfoState);
 
-  const [address, setAddress] = useState(data.address);
-  const [city, setCity] = useState(data.city);
-  const [postalCode, setPostalCode] = useState(data.postalCode);
-  const [country, setCountry] = useState(data.country);
+  const [address, setAddress] = useState(data?.address);
+  const [city, setCity] = useState(data?.city);
+  const [postalCode, setPostalCode] = useState(data?.postalCode);
+  const [country, setCountry] = useState(data?.country);
 
   const goSaveShipping = (e) => {
     e.preventDefault();
