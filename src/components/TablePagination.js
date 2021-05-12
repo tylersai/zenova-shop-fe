@@ -7,8 +7,7 @@ export const TablePagination = ({ currentPage, totalPages, changePage }) => {
   }
   const goChangePage = (e, page) => {
     e.preventDefault();
-    console.log(e.t);
-    !Boolean(e.target.disabled) && changePage && changePage(page);
+    changePage && changePage(page);
   };
   return (
     <Pagination className="TablePagination">

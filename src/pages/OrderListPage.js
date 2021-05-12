@@ -33,9 +33,10 @@ export const OrderListPage = () => {
         <NavItem className="mr-0">
           <NavLink
             to="/orders"
-            // className={orderType === "paid-but-not-delivered" && "active"}
             className="nav-link"
-            activeClassName={orderType === "paid-but-not-delivered" && "active"}
+            activeClassName={
+              orderType === "paid-but-not-delivered" ? "active" : ""
+            }
             onClick={(e) => {
               e.preventDefault();
               handleChangeTab("paid-but-not-delivered");
@@ -47,9 +48,8 @@ export const OrderListPage = () => {
         <NavItem className="mr-0">
           <NavLink
             to="/orders"
-            // className={orderType === "unpaid" && "active"}
             className="nav-link"
-            activeClassName={orderType === "unpaid" && "active"}
+            activeClassName={orderType === "unpaid" ? "active" : ""}
             onClick={(e) => {
               e.preventDefault();
               handleChangeTab("unpaid");
@@ -61,9 +61,8 @@ export const OrderListPage = () => {
         <NavItem className="mr-0">
           <NavLink
             to="/orders"
-            // className={orderType === "delivered" && "active"}
             className="nav-link"
-            activeClassName={orderType === "delivered" && "active"}
+            activeClassName={orderType === "delivered" ? "active" : ""}
             onClick={(e) => {
               e.preventDefault();
               handleChangeTab("delivered");
