@@ -14,6 +14,7 @@ import paypalLogo from "../assets/paypal-seeklogo.com.svg";
 import stripeLogo from "../assets/stripe-seeklogo.com.svg";
 import { Link } from "react-router-dom";
 import {
+  clearCreatedOrder,
   clearExistingOrder,
   createOrderAction,
   removeCartItems,
@@ -36,9 +37,11 @@ export const PlaceOrderPage = ({ history }) => {
 
   useEffect(() => {
     if (data && data._id) {
+      dispatch(removeCartItems());
+      dispatch(clearCreatedOrder());
       history.push("/order/" + data._id);
     }
-  }, [data, history]);
+  }, [data, history, dispatch]);
 
   const getSubtotal = () =>
     +cartItems
@@ -71,7 +74,6 @@ export const PlaceOrderPage = ({ history }) => {
       )
     );
     dispatch(clearExistingOrder());
-    dispatch(removeCartItems());
   };
 
   return (
