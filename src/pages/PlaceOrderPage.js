@@ -129,7 +129,7 @@ export const PlaceOrderPage = ({ history }) => {
                       </Col>
                       <Col lg={3}>
                         <h5 className="my-2 checkout-item-price">
-                          ${+item.price.toFixed(2) * item.qty}
+                          ${+(+item.price.toFixed(2) * item.qty).toFixed(2)}
                         </h5>
                       </Col>
                     </Row>
