@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Alert, Nav, NavItem } from "reactstrap";
 import { getOrders } from "../actions";
-import { Loader } from "../components";
+import { Loader, TablePagination } from "../components";
 import { OrderTable } from "./order";
 
 export const OrderListPage = () => {
@@ -13,12 +13,18 @@ export const OrderListPage = () => {
   );
 
   const [orderType, setOrderType] = useState("paid-but-not-delivered");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    dispatch(getOrders(orderType));
-  }, [dispatch, orderType]);
+    dispatch(getOrders(orderType, currentPage));
+  }, [dispatch, orderType, currentPage]);
 
-  const handleChangeTab = (tab) => tab !== orderType && setOrderType(tab);
+  const handleChangeTab = (tab) => {
+    if (tab !== orderType) {
+      setOrderType(tab);
+      setCurrentPage(1);
+    }
+  };
 
   return (
     <div className="OrderListPage">
@@ -73,7 +79,16 @@ export const OrderListPage = () => {
         ) : error ? (
           <Alert color="danger">{error}</Alert>
         ) : data && data.contents && data.contents.length > 0 ? (
-          <OrderTable orders={data.contents} orderType={orderType} />
+          <>
+            <OrderTable orders={data.contents} orderType={orderType} />
+            <div className="d-flex justify-content-center mt-2">
+              <TablePagination
+                currentPage={currentPage}
+                totalPages={data.totalPages}
+                changePage={setCurrentPage}
+              />
+            </div>
+          </>
         ) : (
           <Alert color="info">No orders available</Alert>
         )}
