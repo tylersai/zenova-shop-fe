@@ -132,6 +132,11 @@ export const OrderDetailPage = ({ match }) => {
                     </Alert>
                   )}
                 </>
+              ) : processing ? (
+                <Alert color="success" className="mt-3">
+                  <Loader delay={30} />
+                  <p className="my-2 text-center">PROCESSING</p>
+                </Alert>
               ) : (
                 <div className="pt-4">
                   <PayPalButton
