@@ -1,4 +1,5 @@
 export const getHeaderConfig = (usr) => {
+  if(!usr) return {};
   let currentUser = usr;
   if (typeof usr === "function") {
     currentUser = usr().currentUserState.data;

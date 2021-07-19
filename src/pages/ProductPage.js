@@ -161,7 +161,7 @@ export const ProductPage = ({ match, history }) => {
                 </ListGroupItem>
               </ListGroup>
             </Card>
-            {currentUser.isAdmin && (
+            {currentUser && currentUser.isAdmin && (
               <>
                 <Row className="mt-3">
                   <Col className="pr-2">
